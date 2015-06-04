@@ -1,0 +1,19 @@
+{
+  "name": "charlie",
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.4"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "**/dist/js/*.min.js",
+        "**/dist/css/*.min.css",
+        "**/dist/fonts/*"
+      ]
+    },
+    "jquery": {
+      "main": "**/dist/jquery.min.js"
+    }
+  }
+}
