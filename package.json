@@ -13,22 +13,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TravelingTechGuy/charlie-dev.git"
+    "url": "git+https://github.com/TravelingTechGuy/charlie.git"
   },
   "author": "Guy Vider",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/TravelingTechGuy/charlie-dev/issues"
+    "url": "https://github.com/TravelingTechGuy/charlie/issues"
   },
-  "homepage": "https://github.com/TravelingTechGuy/charlie-dev#readme",
+  "homepage": "https://github.com/TravelingTechGuy/charlie#readme",
   "dependencies": {
     "body-parser": "~1.12.0",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.3.4",
     "debug": "~2.1.1",
     "ejs": "~2.3.1",
     "express": "~4.12.2",
+    "express-session": "^1.11.2",
     "morgan": "~1.5.1",
-    "request": "^2.56.0",
+    "passport": "^0.2.2",
+    "passport-local": "^1.0.0",
+    "request": "^2.57.0",
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
