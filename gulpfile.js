@@ -7,7 +7,7 @@ var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var babel = require('gulp-babel');
 var clean = require('gulp-rimraf');
-var debug = require('gulp-debug');
+//var debug = require('gulp-debug');
 
 
 var getDist = function(vendor) {
