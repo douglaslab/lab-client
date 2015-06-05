@@ -16,6 +16,7 @@
     "no-spaced-func": 2,
     "no-unused-vars": 2,
     "no-underscore-dangle": false,
-    "no-unused-expressions": false
+    "no-unused-expressions": false,
+    "new-cap": false
   }
 }
