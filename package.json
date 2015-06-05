@@ -8,8 +8,9 @@
     "test": "mocha --harmony tests",
     "cover": "node --harmony ./node_modules/istanbul-harmony/lib/cli.js cover --hook-run-in-context ./node_modules/mocha/bin/_mocha -- --R spec --U exports tests",
     "lint": "eslint .",
-    "build": "gulp",
-    "doc": "jsdoc -c ./jsdoc.json ."
+    "doc": "jsdoc -c ./jsdoc.json .",
+    "build": "bower install && gulp",
+    "postinstall": "bower install && gulp"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
+    "bower": "^1.4.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-bower": "0.0.10",
