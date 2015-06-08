@@ -12,6 +12,6 @@ module.exports = {
     },
     handleError: function(error, req, res, next) {
       console.error(error);
-      res.render('error', {message: error.message, stack: error.stack});
+      res.render('error', {message: error.message, error: error});
     }
 };
