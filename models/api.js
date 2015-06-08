@@ -1,6 +1,6 @@
 'use strict';
 
-const apiUrl = 'https://bionano-api.herokuapp.com';
+var apiUrl = require('../configs/api').apiUrl;
 var debug = require('debug')('api');
 var request = require('request');
 
