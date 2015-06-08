@@ -26,6 +26,7 @@ module.exports = {
         'sendImmediately': true
       }
     };
+
     request.post(url, options, (err, response, result) => {
       if(err) {
         console.error(err);
@@ -54,13 +55,33 @@ module.exports = {
       }
       var items = JSON.parse(body);
       if(items.error) {
-        err = items.data;
+        err = new Error(items.data);
       }
       else {
         items = items.data;
         debug(items);
       }
       return done(err, items);
+    });
+  },
+  getUsers: function(req, done) {
+    var url = apiUrl + '/users';
+    var options = {headers: generateAuthorizationHeader(req.user)};
+    debug(options);
+    request.get(url, options, (err, response, body) => {
+      if(err) {
+        console.error(err);
+        return done(err);
+      }
+      var users = JSON.parse(body);
+      if(users.error) {
+        err = new Error(users.data);
+      }
+      else {
+        users = users.data;
+        debug(users);
+      }
+      return done(err, users);
     });
   }
 };

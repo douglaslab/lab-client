@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <%= include partials/head.ejs %>
+  </head>
+  <body>
+    <%= include partials/navbar.ejs %>
+    <div class="page-header text-center">
+      <h1>List of Users</h1>
+    </div>
+
+    <div class="container">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>School</th>
+          <th>Permission Level</th>
+          <th>Created</th>
+          <th>Modified</th>
+        </tr>
+        <% for(var i = 0; i < users.length; i++) { %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= users[i].name %></td>
+          <td><%= users[i].email %></td>
+          <td><%= users[i].school %></td>
+          <td><%= users[i].permissionLevel %></td>
+          <td><%= users[i].created %></td>
+          <td><%= users[i].modified %></td>
+        </tr>
+        <% } %>
+      </table>
+    </div>
+
+    <%= include partials/scripts.ejs %>
+  </body>
+</html>
