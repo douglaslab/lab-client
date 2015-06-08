@@ -9,9 +9,8 @@
     </div>
     <div class="container">
       <h2><%= message %></h2>
-      <% if(typeof stack !== 'undefined') { %>
-        <pre><%= stack %></pre>
-      <% } %>
+      <h3><%= error.status %></h3>
+      <pre><%= error.stack %></pre>
     </div>
 
     <%= include partials/scripts.ejs %>
