@@ -3,6 +3,8 @@
 var apiUrl = require('../configs/api').apiUrl;
 var debug = require('debug')('api');
 var request = require('request');
+var _ = require('lodash');
+var moment = require('moment');
 
 var generateAuthorizationHeader = function(user) {
   var util = require('util');
@@ -16,7 +18,7 @@ var generateAuthorizationHeader = function(user) {
 };
 
 module.exports = {
-  login: function(req, email, password, done) {
+  login: function(req, email, password, callback) {
     debug('trying to log in user %s', email);
     var url = apiUrl + '/users/login';
     var options = {
@@ -30,28 +32,28 @@ module.exports = {
     request.post(url, options, (err, response, result) => {
       if(err) {
         console.error(err);
-        return done(err);
+        return callback(err);
       }
       if (!result) {
-        return done(null, false, req.flash('loginMessage', 'No user found.'));
+        return callback(null, false, req.flash('loginMessage', 'No user found.'));
       }
       result = JSON.parse(result);
       if(result.error) {
-        return done(null, false, req.flash('loginMessage', result.data));
+        return callback(null, false, req.flash('loginMessage', result.data));
       }
       else {
-        return done(null, result.data);
+        return callback(null, result.data);
       }
     });
   },
-  getItems: function(req, done) {
+  getItems: function(req, callback) {
     var url = apiUrl + '/items';
     var options = {headers: generateAuthorizationHeader(req.user)};
     debug(options);
     request.get(url, options, (err, response, body) => {
       if(err) {
         console.error(err);
-        return done(err);
+        return callback(err);
       }
       var items = JSON.parse(body);
       if(items.error) {
@@ -61,27 +63,45 @@ module.exports = {
         items = items.data;
         debug(items);
       }
-      return done(err, items);
+      return callback(err, items);
     });
   },
-  getUsers: function(req, done) {
-    var url = apiUrl + '/users';
-    var options = {headers: generateAuthorizationHeader(req.user)};
+  getUsers: function(req, callback) {
+    var options = {
+      uri: apiUrl + '/users',
+      headers: generateAuthorizationHeader(req.user)
+    };
     debug(options);
-    request.get(url, options, (err, response, body) => {
+    request.get(options, (err, response, body) => {
       if(err) {
         console.error(err);
-        return done(err);
+        return callback(err);
       }
       var users = JSON.parse(body);
       if(users.error) {
         err = new Error(users.data);
       }
       else {
-        users = users.data;
+        users = _.forEach(users.data, (user) => {
+          user.created = moment(user.created).format('MM/DD/YYYY hh:mm:ss');
+          user.modified = moment(user.modified).format('MM/DD/YYYY hh:mm:ss');
+        });
         debug(users);
       }
-      return done(err, users);
+      return callback(err, users);
+    });
+  },
+  createUser: function(req, callback) {
+    //TODO: validate input
+    var options = {
+      uri: apiUrl + '/users',
+      json: true,
+      body: req.body,
+      headers: generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.post(options, (err, response, body) => {
+      callback(err, body);
     });
   }
 };

@@ -17,6 +17,17 @@ module.exports = function(passport) {
     });
   });
 
+  router.post('/', (req, res, next) => {
+    api.createUser(req, (error, result) => {
+      if(!error) {
+        res.json(result);
+      }
+      else {
+        helper.handleError(error, req, res, next);
+      }
+    });
+  });
+
   router.post('/login', passport.authenticate('local', {
     successRedirect: '/items',
     failureRedirect: '/',
