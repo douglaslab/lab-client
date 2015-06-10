@@ -1,0 +1,29 @@
+'use strict';
+
+var debug = require('debug')('users');
+var request = require('request');
+var apiUrl = require('../configs/api').apiUrl;
+var helper = require('./apiHelper');
+
+module.exports = {
+  get: function(req, callback) {
+    var url = apiUrl + '/items';
+    var options = {headers: helper.generateAuthorizationHeader(req.user)};
+    debug(options);
+    request.get(url, options, (err, response, body) => {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      var items = JSON.parse(body);
+      if(items.error) {
+        err = new Error(items.data);
+      }
+      else {
+        items = items.data;
+        debug(items);
+      }
+      return callback(err, items);
+    });
+  }
+};
