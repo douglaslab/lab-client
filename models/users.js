@@ -1,21 +1,11 @@
 'use strict';
 
-var apiUrl = require('../configs/api').apiUrl;
-var debug = require('debug')('api');
+var debug = require('debug')('users');
 var request = require('request');
 var _ = require('lodash');
 var moment = require('moment');
-
-var generateAuthorizationHeader = function(user) {
-  var util = require('util');
-  var crypto = require('crypto');
-  var timestamp = parseInt(Date.now() / 1000, 10);
-  var hmac = crypto.createHmac('sha1', user.apiSecret).update(user.apiKey).digest('hex');
-  var token = crypto.createHash('md5').update(hmac + timestamp).digest('hex');
-  return {
-    'X-API-Authorization': util.format('key=%s, token=%s, ts=%s', user.apiKey, token, timestamp)
-  };
-};
+var apiUrl = require('../configs/api').apiUrl;
+var helper = require('./apiHelper');
 
 module.exports = {
   login: function(req, email, password, callback) {
@@ -46,30 +36,10 @@ module.exports = {
       }
     });
   },
-  getItems: function(req, callback) {
-    var url = apiUrl + '/items';
-    var options = {headers: generateAuthorizationHeader(req.user)};
-    debug(options);
-    request.get(url, options, (err, response, body) => {
-      if(err) {
-        console.error(err);
-        return callback(err);
-      }
-      var items = JSON.parse(body);
-      if(items.error) {
-        err = new Error(items.data);
-      }
-      else {
-        items = items.data;
-        debug(items);
-      }
-      return callback(err, items);
-    });
-  },
-  getUsers: function(req, callback) {
+  get: function(req, callback) {
     var options = {
       uri: apiUrl + '/users',
-      headers: generateAuthorizationHeader(req.user)
+      headers: helper.generateAuthorizationHeader(req.user)
     };
     debug(options);
     request.get(options, (err, response, body) => {
@@ -91,17 +61,36 @@ module.exports = {
       return callback(err, users);
     });
   },
-  createUser: function(req, callback) {
+  create: function(req, callback) {
     //TODO: validate input
     var options = {
       uri: apiUrl + '/users',
       json: true,
       body: req.body,
-      headers: generateAuthorizationHeader(req.user)
+      headers: helper.generateAuthorizationHeader(req.user)
     };
     debug(options);
     request.post(options, (err, response, body) => {
       callback(err, body);
     });
+  },
+  update: function(req, callback) {
+    var options = {
+      uri: apiUrl + '/users/' + req.params.email,
+      json: true,
+      body: req.body,
+      headers: helper.generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.put(options, (err, response, body) => callback(err, body));
+  },
+  delete: function(req, callback) {
+    var options = {
+      uri: apiUrl + '/users/' + req.params.email,
+      json: true,
+      headers: helper.generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.del(options, (err, response, body) => callback(err, body));
   }
 };

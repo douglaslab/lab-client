@@ -3,29 +3,30 @@
 
 module.exports = function(passport) {
   var router = require('express').Router();
-  var api = require('../models/api');
+  var users = require('../models/users');
   var helper = require('../models/routerHelper');
 
   router.get('/', helper.isLoggedIn, (req, res, next) => {
-    api.getUsers(req, (error, users) => {
+    users.get(req, (error, result) => {
       if(!error) {
-        res.render('users', {username: req.user.name, users: users});
+        res.render('users', {username: req.user.name, users: result});
       }
       else {
-        helper.handleError(error, req, res, next);
+        helper.handleError(error, req, res);
       }
     });
   });
 
   router.post('/', (req, res, next) => {
-    api.createUser(req, (error, result) => {
-      if(!error) {
-        res.json(result);
-      }
-      else {
-        helper.handleError(error, req, res, next);
-      }
-    });
+    users.create(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  });
+
+  router.put('/:email', (req, res, next) => {
+    users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  });
+
+  router.delete('/:email', (req, res, next) => {
+    users.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
   router.post('/login', passport.authenticate('local', {

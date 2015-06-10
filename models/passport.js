@@ -1,7 +1,7 @@
 'use strict';
 
 var LocalStrategy = require('passport-local').Strategy;
-var api = require('./api.js');
+var users = require('./users.js');
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
@@ -16,6 +16,6 @@ module.exports = function(passport) {
       usernameField: 'email',
       passwordField: 'password',
       passReqToCallback: true // allows us to pass back the entire request to the callback
-    }, api.login
+    }, users.login
   ));
 };

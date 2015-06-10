@@ -1,53 +1,95 @@
 'use strict';
 
-var addUser = function() {
-  //TODO: validate input
-  var data = {
+var flash = function(message, error) {
+  $('#message').text(message).attr('class', error ? 'text-danger' : '');
+};
+
+var serverCall = function(params, callback) {
+  $.ajax(params)
+    .done((result) => {
+      if(result.error) {
+        console.error(result.data);
+        callback(result.data, null);
+      }
+      else {
+        callback(null, result.data);
+      }
+    })
+    .fail((xhr, status, error) => {
+      console.error(error, null);
+    });
+};
+
+var validateForm = function() {
+  //TODO: validate input fields and show errors
+  var fields = {
     email: $('#email').val(),
     name: $('#name').val(),
     school: $('#school').val(),
     password: $('#password1').val(),
     permissionLevel: $('#permissionLevel').val()
   };
-  console.log(data);
-  $.ajax({
+  return fields;
+};
+
+var addUser = function() {
+  var data = validateForm();
+  if(!data) {
+    return;
+  }
+
+  var params = {
     url: '/users',
     type: 'POST',
     data: data,
     dataType: 'json'
-  }).done(function(result) {
-    if(result.error) {
-      console.error(result.data);
-    }
-    else {
+  };
+  serverCall(params, (error) => {
+    if(!error) {
+      $('#myModal').modal('hide');
+      $('#btnSave').off('click');
       location.reload();
     }
-  }).fail(function(error) {
-    console.error(error);
-  }).always(function() {
-    $('#btnSave').off('click');
   });
 };
 
 var editUser = function() {
-  console.log('edit');
-  $('#btnSave').off('click');
+  var data = validateForm();
+  if(!data) {
+    return;
+  }
+
+  var params = {
+    url: '/users/' + data.email,
+    type: 'PUT',
+    data: data,
+    dataType: 'json'
+  };
+  serverCall(params, (error) => {
+    if(!error) {
+      $('#myModal').modal('hide');
+      $('#btnSave').off('click');
+      location.reload();
+    }
+  });
 };
 
 var deleteUser = function(email) {
-  $.ajax({
+  serverCall({
     url: '/users/' + email,
     type: 'DELETE',
     dataType: 'json'
-  }).done(function() {
-
-  }).fail(function(error) {
-    console.error(error);
+  }, (error) => {
+    if(!error) {
+      location.reload();
+    }
+    else {
+      flash(error);
+    }
   });
 };
 
 $(function() {
-
   $('#btnAdd').on('click', () => {
     $('#myModalLabel').text('Add User');
     $('#myForm').trigger('reset');
@@ -72,8 +114,10 @@ $(function() {
   });
 
   $('button[data-delete]').on('click', function() {
-    var id = $(this).data('delete');
+    var id = $('table tr:eq(' + $(this).data('delete') + ') td:eq(2)').text();
     var result = confirm('are you sure you want to delete user ' + id);
-    console.log(result);
+    if(result) {
+      deleteUser(id);
+    }
   });
 });

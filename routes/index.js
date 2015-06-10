@@ -3,7 +3,7 @@
 
 module.exports = function(passport) {
   var router = require('express').Router();
-  var api = require('../models/api');
+  var items = require('../models/items');
   var helper = require('../models/routerHelper');
 
   router.get('/', (req, res, next) => {
@@ -11,12 +11,12 @@ module.exports = function(passport) {
   });
 
   router.get('/items', helper.isLoggedIn, (req, res, next) => {
-    api.getItems(req, (error, items) => {
+    items.get(req, (error, result) => {
       if(!error) {
-        res.render('items', {username: req.user.name, items: items});
+        res.render('items', {username: req.user.name, items: result});
       }
       else {
-        helper.handleError(error, req, res, next);
+        helper.handleError(error, req, res);
       }
     });
   });
