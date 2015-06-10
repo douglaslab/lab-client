@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var bower = require('main-bower-files');
 var gulpFilter = require('gulp-filter');
 var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 var minifyCSS = require('gulp-minify-css');
 var babel = require('gulp-babel');
 var clean = require('gulp-rimraf');
@@ -40,8 +41,7 @@ gulp.task('bower', function() {
     .pipe(gulp.dest(dist.js))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
-    .pipe(gulp.dest(dist.css))
-    .pipe(cssFilter.restore());
+    .pipe(gulp.dest(dist.css));
 });
 
 gulp.task('client', function() {
@@ -52,8 +52,10 @@ gulp.task('client', function() {
 
   gulp.src('client/**')
     .pipe(jsFilter)
+    .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(dist.dir))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
