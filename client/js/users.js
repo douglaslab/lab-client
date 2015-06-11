@@ -1,24 +1,5 @@
+/* eslint-disable no-alert */
 'use strict';
-
-var flash = function(message, error) {
-  $('#message').text(message).attr('class', error ? 'text-danger' : '');
-};
-
-var serverCall = function(params, callback) {
-  $.ajax(params)
-    .done((result) => {
-      if(result.error) {
-        console.error(result.data);
-        callback(result.data, null);
-      }
-      else {
-        callback(null, result.data);
-      }
-    })
-    .fail((xhr, status, error) => {
-      console.error(error, null);
-    });
-};
 
 var validateForm = function() {
   //TODO: validate input fields and show errors
@@ -53,14 +34,14 @@ var addUser = function() {
   });
 };
 
-var editUser = function() {
+var editUser = function(email) {
   var data = validateForm();
   if(!data) {
     return;
   }
 
   var params = {
-    url: '/users/' + data.email,
+    url: '/users/' + email,
     type: 'PUT',
     data: data,
     dataType: 'json'
@@ -104,20 +85,20 @@ $(function() {
     var email = $(row).children('td:eq(2)').text();
     var school = $(row).children('td:eq(3)').text();
     var permission = $(row).children('td:eq(4)').text();
-    $('#myModalLabel').text('Edit User');
-    $('#email').val(email).prop('disabled', true);
+    $('#myModalLabel').text('Edit User ' + email);
+    $('#email').remove();
     $('#name').val(name);
     $('#school').val(school);
     $('#permissionLevel').val(permission);
-    $('#btnSave').on('click', editUser);
+    $('#btnSave').on('click', () => editUser(email));
     $('#myModal').modal('show');
   });
 
   $('button[data-delete]').on('click', function() {
-    var id = $('table tr:eq(' + $(this).data('delete') + ') td:eq(2)').text();
-    var result = confirm('are you sure you want to delete user ' + id);
+    var email = $('table tr:eq(' + $(this).data('delete') + ') td:eq(2)').text();
+    var result = confirm('are you sure you want to delete user ' + email);
     if(result) {
-      deleteUser(id);
+      deleteUser(email);
     }
   });
 });
