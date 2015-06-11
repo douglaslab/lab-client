@@ -22,7 +22,15 @@ module.exports = function(passport) {
   });
 
   router.post('/items', helper.isLoggedIn, (req, res, next) => {
+    items.create(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  });
 
+  router.put('/items/:id', helper.isLoggedIn, (req, res, next) => {
+    items.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  });
+
+  router.delete('/items/:id', helper.isLoggedIn, (req, res, next) => {
+    items.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
   return router;

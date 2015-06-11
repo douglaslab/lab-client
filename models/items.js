@@ -25,5 +25,37 @@ module.exports = {
       }
       return callback(err, items);
     });
+  },
+  create: function(req, callback) {
+    //TODO: validate input
+    var options = {
+      uri: apiUrl + '/items',
+      json: true,
+      body: req.body,
+      headers: helper.generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.post(options, (err, response, body) => {
+      callback(err, body);
+    });
+  },
+  update: function(req, callback) {
+    var options = {
+      uri: apiUrl + '/items/' + req.params.id,
+      json: true,
+      body: req.body,
+      headers: helper.generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.put(options, (err, response, body) => callback(err, body));
+  },
+  delete: function(req, callback) {
+    var options = {
+      uri: apiUrl + '/items/' + req.params.id,
+      json: true,
+      headers: helper.generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.del(options, (err, response, body) => callback(err, body));
   }
 };

@@ -17,15 +17,15 @@ module.exports = function(passport) {
     });
   });
 
-  router.post('/', (req, res, next) => {
+  router.post('/', helper.isLoggedIn, (req, res, next) => {
     users.create(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
-  router.put('/:email', (req, res, next) => {
+  router.put('/:email', helper.isLoggedIn, (req, res, next) => {
     users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
-  router.delete('/:email', (req, res, next) => {
+  router.delete('/:email', helper.isLoggedIn, (req, res, next) => {
     users.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
