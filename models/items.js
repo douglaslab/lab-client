@@ -41,7 +41,7 @@ module.exports = {
   },
   update: function(req, callback) {
     var options = {
-      uri: apiUrl + '/items/' + req.params.id,
+      uri: apiUrl + '/items/' + req.params.id + (req.params.replace ? '/true' : ''),
       json: true,
       body: req.body,
       headers: helper.generateAuthorizationHeader(req.user)

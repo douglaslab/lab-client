@@ -1,4 +1,5 @@
 /* eslint-disable no-alert */
+/* global serverCall, flash */
 'use strict';
 
 var removeProp = function(e) {
@@ -87,9 +88,9 @@ var editItem = function(id) {
   if(!data) {
     return;
   }
-
+  //we'll be replacing all properties - to allow removing
   var params = {
-    url: '/items/' + id,
+    url: '/items/' + id + '/true',
     type: 'PUT',
     data: data,
     dataType: 'json'
@@ -103,7 +104,12 @@ var editItem = function(id) {
   });
 };
 
-var deleteItem = function(id) {
+var deleteItem = function() {
+  var id = $(this).data('delete');
+  var result = confirm('are you sure you want to delete item ' + id);
+  if(!result) {
+      return;
+  }
   serverCall({
     url: '/items/' + id,
     type: 'DELETE',
@@ -119,8 +125,8 @@ var deleteItem = function(id) {
 };
 
 $(function() {
-
-  $('#btnAdd').on('click', () => {
+  let originalField = $('#myForm > .row').clone();
+  $('#btnAdd').on('click', function() {
     $('#myModalLabel').text('Add Item');
     $('#myForm').trigger('reset');
     $('#btnSave').on('click', addItem);
@@ -128,20 +134,20 @@ $(function() {
   });
 
   $('button[data-edit]').on('click', function() {
+    let id = $(this).data('edit');
     populateModal($(this).parent().parent().find('.properties > .property'));
-    var id = $(this).data('edit');
     $('#myModalLabel').text('Edit Item ' + id);
     $('#btnSave').on('click', () => editItem(id));
     $('#myModal').modal('show');
   });
 
-  $('button[data-delete]').on('click', function() {
-    var id = $(this).data('delete');
-    var result = confirm('are you sure you want to delete item ' + id);
-    if(result) {
-      deleteItem(id);
-    }
-  });
+  $('button[data-delete]').on('click', deleteItem);
 
   $('.add-prop').on('click', addProp);
+
+  //reset modal after it's closed
+  $('#myModal').on('hidden.bs.modal', function() {
+    $('#myForm').empty();
+    originalField.appendTo('#myForm');
+  });
 });
