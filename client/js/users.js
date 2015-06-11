@@ -1,4 +1,5 @@
 /* eslint-disable no-alert */
+/* global serverCall, flash */
 'use strict';
 
 var validateForm = function() {

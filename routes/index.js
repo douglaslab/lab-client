@@ -29,6 +29,10 @@ module.exports = function(passport) {
     items.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
+  router.put('/items/:id/:replace', helper.isLoggedIn, (req, res, next) => {
+    items.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  });
+
   router.delete('/items/:id', helper.isLoggedIn, (req, res, next) => {
     items.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
