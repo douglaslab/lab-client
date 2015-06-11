@@ -32,9 +32,8 @@ var validateProperties = function() {
   return properties;
 };
 
-var populateModal = function() {
+var populateModal = function(properties) {
   var values = {};
-  var properties = $(this).parent().parent().find('.properties > .property');
   $(properties).each(i => {
     let prop = $(properties)[i];
     let name = $(prop).find('.name').text();
@@ -129,7 +128,7 @@ $(function() {
   });
 
   $('button[data-edit]').on('click', function() {
-    populateModal();
+    populateModal($(this).parent().parent().find('.properties > .property'));
     var id = $(this).data('edit');
     $('#myModalLabel').text('Edit Item ' + id);
     $('#btnSave').on('click', () => editItem(id));
