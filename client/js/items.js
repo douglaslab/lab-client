@@ -10,7 +10,6 @@ var removeProp = function(e) {
 var addProp = function(e) {
   e.preventDefault();
   var lastRow = $('#myForm > .row:last');
-  console.log(lastRow);
   var newRow = lastRow.clone();
   newRow.find('.property').val('');
   newRow.find('.value').val('');
@@ -23,13 +22,11 @@ var validateProperties = function() {
   //TODO: validate properties, check for multiples etc.
   var properties = {};
   var rows = $('#myForm > .row');
-  console.log(rows);
   for(let i = 0; i < rows.length; i++) {
     let name = $(rows[i]).find('.property').val();
     let value = $(rows[i]).find('.value').val();
     properties[name] = value;
   }
-  console.log(properties);
   return properties;
 };
 

@@ -32,3 +32,9 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+#serverStatus {
+  font-size: 20px;
+  font-weight: 400;
+}
+

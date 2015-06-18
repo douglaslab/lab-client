@@ -20,3 +20,13 @@ var serverCall = function(params, callback) {
       console.error(error, null);
     });
 };
+
+var apiServerStatus = function() {
+  serverCall({url: '/apihealth', type: 'GET'}, (err, result) => {
+    var status = !err && result.online;
+    $('#serverStatus')
+      .text(status ? 'on' : 'off')
+      .removeClass(!status ? 'text-success' : 'text-danger')
+      .addClass(status ? 'text-success' : 'text-danger');
+  });
+};
