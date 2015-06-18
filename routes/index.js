@@ -10,6 +10,12 @@ module.exports = function(passport) {
     res.render('login', { message: req.flash('loginMessage') });
   });
 
+  router.get('/apihealth', (req, res, next) => {
+    items.getApiHealth((err, result) => {
+      res.json({data: {online: (err || result.error) ? false : result.data.online}});
+    });
+  });
+
   router.get('/items', helper.isLoggedIn, (req, res, next) => {
     items.get(req, (error, result) => {
       if(!error) {

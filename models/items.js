@@ -57,5 +57,12 @@ module.exports = {
     };
     debug(options);
     request.del(options, (err, response, body) => callback(err, body));
+  },
+  getApiHealth: function(callback) {
+    var options = {
+      uri: apiUrl + '/health',
+      json: true
+    };
+    request.get(options, (err, response, body) => callback(err, body));
   }
 };
