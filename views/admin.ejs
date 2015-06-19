@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <%= include partials/head.ejs %>
+  </head>
+  <body>
+    <%= include partials/navbar.ejs %>
+    <div class="page-header text-center">
+      <h1>Audit Log</h1>
+    </div>
+
+    <div class="container">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th></th>
+          <th>Date</th>
+          <th>Entity</th>
+          <th>Action</th>
+          <th>User</th>
+          <th>Comment</th>
+        </tr>
+        <% for(var i = 0; i < log.length; i++) { %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= new Date(log[i].created).toLocaleString() %></td>
+          <td><%= log[i].entity %></td>
+          <td><%= log[i].action %></td>
+          <td><%= log[i].user %></td>
+          <td><%= log[i].comment %></td>
+        </tr>
+        <% } %>
+      </table>
+    </div>
+
+    <%= include partials/scripts.ejs %>
+  </body>
+</html>

@@ -1,15 +1,28 @@
 /* eslint-disable no-unused-vars */
 'use strict';
 
-module.exports = {
+var Helper = {
   isLoggedIn: function(req, res, next) {
     if(req.isAuthenticated()) {
       return next();
     }
     res.redirect('/');
   },
-  isPermissionValid: function(permissionNeeded, req, res, next) {
-
+  isAdmin: function(req, res, next) {
+    if(req.user.permissionLevel === 'ADMIN') {
+      return next();
+    }
+    else {
+      Helper.handleError(new Error('Permission denied - must be admin'), req, res);
+    }
+  },
+  isManager: function(req, res, next) {
+    if(req.user.permissionLevel === 'ADMIN' || req.permissionLevel === 'MANAGER') {
+      return next();
+    }
+    else {
+      Helper.handleError(new Error('Permission denied - must be manager'), req, res);
+    }
   },
   handleError: function(error, req, res) {
     console.error(error);
@@ -23,3 +36,5 @@ module.exports = {
     res.json(result);
   }
 };
+
+module.exports = Helper;

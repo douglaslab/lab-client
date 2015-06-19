@@ -22,7 +22,7 @@ var serverCall = function(params, callback) {
 };
 
 var apiServerStatus = function() {
-  serverCall({url: '/apihealth', type: 'GET'}, (err, result) => {
+  serverCall({url: '/admin/apihealth', type: 'GET'}, (err, result) => {
     var status = !err && result.online;
     $('#serverStatus')
       .text(status ? 'on' : 'off')
@@ -30,3 +30,9 @@ var apiServerStatus = function() {
       .addClass(status ? 'text-success' : 'text-danger');
   });
 };
+
+$(function() {
+  var isLoginPage = location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === '';
+  apiServerStatus();
+  setInterval(apiServerStatus, isLoginPage ? 30 * 1000 : 20 * 60 * 1000);
+});
