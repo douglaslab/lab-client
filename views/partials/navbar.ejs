@@ -1,7 +1,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header pull-left">
-          <a class="navbar-brand" href="/">DLIMS</a>
+          <a class="navbar-brand" href="/items">DLIMS</a>
         </div>
         <div class="navbar-header pull-right">
            <button type="button" class="navbar-toggle"
@@ -22,7 +22,12 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="<%= typeof items !== 'undefined' ? 'active' : '' %>"><a href="/items">Items</a></li>
-            <li class="<%= typeof users !== 'undefined' ? 'active' : '' %>""><a href="/users">Users</a></li>
+            <% if(typeof permissionLevel !== 'undefined' && ['ADMIN', 'MANAGER'].indexOf(permissionLevel) !== -1) { %>
+              <li class="<%= typeof users !== 'undefined' ? 'active' : '' %>"><a href="/users">Users</a></li>
+            <% } %>
+            <% if(typeof permissionLevel !== 'undefined' && permissionLevel === 'ADMIN') { %>
+              <li class="<%= typeof admin !== 'undefined' ? 'active' : '' %>"><a href="/admin">Admin</a></li>
+            <% } %>
             <!--<li><a href="/about">About</a></li>-->
           </ul>
         </div>

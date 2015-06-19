@@ -6,10 +6,14 @@ module.exports = function(passport) {
   var users = require('../models/users');
   var helper = require('../models/routerHelper');
 
-  router.get('/', helper.isLoggedIn, (req, res, next) => {
+  router.get('/', helper.isLoggedIn, helper.isManager, (req, res, next) => {
     users.get(req, (error, result) => {
       if(!error) {
-        res.render('users', {username: req.user.name, users: result});
+        res.render('users', {
+          username: req.user.name,
+          permissionLevel: req.user.permissionLevel,
+          users: result
+        });
       }
       else {
         helper.handleError(error, req, res);
@@ -17,15 +21,15 @@ module.exports = function(passport) {
     });
   });
 
-  router.post('/', helper.isLoggedIn, (req, res, next) => {
+  router.post('/', helper.isLoggedIn, helper.isManager, (req, res, next) => {
     users.create(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
-  router.put('/:email', helper.isLoggedIn, (req, res, next) => {
+  router.put('/:email', helper.isLoggedIn, helper.isManager, (req, res, next) => {
     users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
-  router.delete('/:email', helper.isLoggedIn, (req, res, next) => {
+  router.delete('/:email', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
     users.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 

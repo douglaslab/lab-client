@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 'use strict';
 
-module.exports = function(passport) {
+module.exports = function() {
   var router = require('express').Router();
   var items = require('../models/items');
   var helper = require('../models/routerHelper');
@@ -10,16 +10,14 @@ module.exports = function(passport) {
     res.render('login', { message: req.flash('loginMessage') });
   });
 
-  router.get('/apihealth', (req, res, next) => {
-    items.getApiHealth((err, result) => {
-      res.json({data: {online: (err || result.error) ? false : result.data.online}});
-    });
-  });
-
   router.get('/items', helper.isLoggedIn, (req, res, next) => {
     items.get(req, (error, result) => {
       if(!error) {
-        res.render('items', {username: req.user.name, items: result});
+        res.render('items', {
+          username: req.user.name,
+          permissionLevel: req.user.permissionLevel,
+          items: result
+        });
       }
       else {
         helper.handleError(error, req, res);

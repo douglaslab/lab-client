@@ -22,7 +22,7 @@ var serverCall = function(params, callback) {
 };
 
 var apiServerStatus = function() {
-  serverCall({url: '/apihealth', type: 'GET'}, (err, result) => {
+  serverCall({url: '/admin/apihealth', type: 'GET'}, (err, result) => {
     var status = !err && result.online;
     $('#serverStatus')
       .text(status ? 'on' : 'off')
