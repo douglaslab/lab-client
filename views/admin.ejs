@@ -21,7 +21,7 @@
         <% for(var i = 0; i < log.length; i++) { %>
         <tr>
           <td><%= i + 1 %></td>
-          <td><%= log[i].created %></td>
+          <td><%= new Date(log[i].created).toLocaleString() %></td>
           <td><%= log[i].entity %></td>
           <td><%= log[i].action %></td>
           <td><%= log[i].user %></td>

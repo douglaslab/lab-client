@@ -13,9 +13,10 @@
 
           <p class="navbar-text">
             <% if(typeof username !== 'undefined') { %>
-              <b><%= username %></b>
+              <b><%= username %></b>&nbsp;
               <a href="/users/logout" class="navbar-link">Logout</a>&nbsp;
             <% } %>
+            (status: <span id="serverStatus">...</span>)
           </p>
         </div>
 
