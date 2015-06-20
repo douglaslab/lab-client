@@ -15,8 +15,7 @@ module.exports = function() {
   router.get('/', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
     admin.audit(req, (error, result) => {
       if(!error) {
-        console.log(result);
-        res.render('admin', {
+       res.render('admin', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
           log: result
