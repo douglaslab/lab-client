@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <%= include partials/head.ejs %>
+  </head>
+  <body>
+    <%= include partials/navbar.ejs %>
+    <div class="page-header text-center">
+      <h1>Permissions</h1>
+    </div>
+    <div class="container">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th></th>
+          <% for(var i = 0; i < 4; i++) { %>
+            <th><%= permissions[i].action %></th>
+          <% } %>
+        </tr>
+        <% for(i = 0; i < 4 * 4; i++) {
+          if(i % 4 === 0) { %>
+            <tr>
+              <td><%= permissions[i].element %></td>
+              <td>
+                <select class="permission" data-element="<%= permissions[i].element %>" data-action="<%= permissions[i].action %>">
+                  <option <%= permissions[i].permissionRequired === 'USER' ? 'selected' : '' %>>USER</option>
+                  <option <%= permissions[i].permissionRequired === 'MANAGER' ? 'selected' : '' %>>MANAGER</option>
+                  <option <%= permissions[i].permissionRequired === 'ADMIN' ? 'selected' : '' %>>ADMIN</option>
+                </select>
+              </td>
+          <% } else { %>
+            <td>
+              <select class="permission" data-element="<%= permissions[i].element %>" data-action="<%= permissions[i].action %>">
+                <option <%= permissions[i].permissionRequired === 'USER' ? 'selected' : '' %>>USER</option>
+                <option <%= permissions[i].permissionRequired === 'MANAGER' ? 'selected' : '' %>>MANAGER</option>
+                <option <%= permissions[i].permissionRequired === 'ADMIN' ? 'selected' : '' %>>ADMIN</option>
+              </select>
+            </td>
+          <% }
+          if(i % 4 === 3) { %>
+            </tr>
+          <% }
+        } %>
+      </table>
+      <div class="pull-right">
+        <button class="btn btn-primary"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;Save</button>
+      </div>
+    </div>
+
+    <%= include partials/scripts.ejs %>
+  </body>
+</html>

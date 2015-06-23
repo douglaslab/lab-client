@@ -12,13 +12,29 @@ module.exports = function() {
     });
   });
 
-  router.get('/', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
-    admin.audit(req, (error, result) => {
+  router.get('/log', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
+    admin.getLog(req, (error, result) => {
       if(!error) {
-       res.render('admin', {
+        res.render('log', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
           log: result
+        });
+      }
+      else {
+        helper.handleError(error, req, res);
+      }
+    });
+  });
+
+  router.get('/permissions', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
+    admin.getPermissions(req, (error, result) => {
+      if(!error) {
+        console.log(result);
+        res.render('permissions', {
+          username: req.user.name,
+          permissionLevel: req.user.permissionLevel,
+          permissions: result
         });
       }
       else {
