@@ -9,11 +9,11 @@ var removeProp = function(e) {
 
 var addProp = function(e) {
   e.preventDefault();
-  var lastRow = $('#myForm > .row:last');
+  var lastRow = $('#itemForm > .row:last');
   var newRow = lastRow.clone();
   newRow.find('.property').val('');
   newRow.find('.value').val('');
-  newRow.appendTo('#myForm');
+  newRow.appendTo('#itemForm');
   $(this).text('-').attr('title', 'remove property').off('click').on('click', removeProp);
   newRow.find('.add-prop').on('click', addProp);
 };
@@ -21,7 +21,7 @@ var addProp = function(e) {
 var validateProperties = function() {
   //TODO: validate properties, check for multiples etc.
   var properties = {};
-  var rows = $('#myForm > .row');
+  var rows = $('#itemForm > .row');
   for(let i = 0; i < rows.length; i++) {
     let name = $(rows[i]).find('.property').val();
     let value = $(rows[i]).find('.value').val();
@@ -39,9 +39,9 @@ var populateModal = function(properties) {
     values[name] = value;
   });
   let first = true;
-  let button = $('#myForm > .row:last').find('.add-prop').clone().on('click', addProp);
+  let button = $('#itemForm > .row:last').find('.add-prop').clone().on('click', addProp);
   for(let key in values) {
-    let lastRow = $('#myForm > .row:last');
+    let lastRow = $('#itemForm > .row:last');
     if(first) {
       lastRow.find('.property').val(key);
       lastRow.find('.value').val(values[key]);
@@ -53,10 +53,10 @@ var populateModal = function(properties) {
       newRow.find('.property').val(key);
       newRow.find('.value').val(values[key]);
       newRow.find('.add-prop').text('-').attr('title', 'remove property').off('click').on('click', removeProp);
-      newRow.appendTo('#myForm');
+      newRow.appendTo('#itemForm');
     }
   }
-  button.appendTo($('#myForm > .row:last').find('.add-prop').parent());
+  button.appendTo($('#itemForm > .row:last').find('.add-prop').parent());
 };
 
 var addItem = function() {
@@ -73,7 +73,7 @@ var addItem = function() {
   };
   serverCall(params, (error) => {
     if(!error) {
-      $('#myModal').modal('hide');
+      $('#itemModal').modal('hide');
       $('#btnSave').off('click');
       location.reload();
     }
@@ -94,7 +94,7 @@ var editItem = function(id) {
   };
   serverCall(params, (error) => {
     if(!error) {
-      $('#myModal').modal('hide');
+      $('#itemModal').modal('hide');
       $('#btnSave').off('click');
       location.reload();
     }
@@ -122,20 +122,20 @@ var deleteItem = function() {
 };
 
 $(function() {
-  let originalField = $('#myForm > .row').clone();
+  let originalField = $('#itemForm > .row').clone();
   $('#btnAdd').on('click', function() {
-    $('#myModalLabel').text('Add Item');
-    $('#myForm').trigger('reset');
+    $('#itemModalLabel').text('Add Item');
+    $('#itemForm').trigger('reset');
     $('#btnSave').on('click', addItem);
-    $('#myModal').modal('show');
+    $('#itemModal').modal('show');
   });
 
   $('button[data-edit]').on('click', function() {
     let id = $(this).data('edit');
     populateModal($(this).parent().parent().find('.properties > .property'));
-    $('#myModalLabel').text('Edit Item ' + id);
+    $('#itemModalLabel').text('Edit Item ' + id);
     $('#btnSave').on('click', () => editItem(id));
-    $('#myModal').modal('show');
+    $('#itemModal').modal('show');
   });
 
   $('button[data-delete]').on('click', deleteItem);
@@ -143,8 +143,8 @@ $(function() {
   $('.add-prop').on('click', addProp);
 
   //reset modal after it's closed
-  $('#myModal').on('hidden.bs.modal', function() {
-    $('#myForm').empty();
-    originalField.appendTo('#myForm');
+  $('#itemModal').on('hidden.bs.modal', function() {
+    $('#itemForm').empty();
+    originalField.appendTo('#itemForm');
   });
 });
