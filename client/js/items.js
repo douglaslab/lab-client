@@ -116,7 +116,7 @@ var deleteItem = function() {
       location.reload();
     }
     else {
-      flash(error);
+      flash(error, true);
     }
   });
 };

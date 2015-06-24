@@ -36,7 +36,12 @@ var Helper = {
   handleErrorJSON: function(res, err, result) {
     if(err) {
       console.error(err);
-      result = {error: true, data: err};
+      if(err.code && err.code === 'ECONNREFUSED') {
+        result = {error: true, data: 'Cannot connect to API server'};
+      }
+      else {
+        result = {error: true, data: err.message};
+      }
     }
     res.json(result);
   }

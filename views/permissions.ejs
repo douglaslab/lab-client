@@ -15,10 +15,11 @@
             <th><%= permissions[i].action %></th>
           <% } %>
         </tr>
-        <% for(i = 0; i < 4 * 4; i++) {
-          if(i % 4 === 0) { %>
+        <% for(i = 0; i < 4 * 4; i++) { %>
+          <% if(i % 4 === 0) { %>
             <tr>
               <td><b><%= permissions[i].element %></b></td>
+          <% } %>
               <td>
                 <select class="permission" data-element="<%= permissions[i].element %>" data-action="<%= permissions[i].action %>">
                   <option <%= permissions[i].permissionRequired === 'USER' ? 'selected' : '' %>>USER</option>
@@ -26,25 +27,17 @@
                   <option <%= permissions[i].permissionRequired === 'ADMIN' ? 'selected' : '' %>>ADMIN</option>
                 </select>
               </td>
-          <% } else { %>
-            <td>
-              <select class="permission" data-element="<%= permissions[i].element %>" data-action="<%= permissions[i].action %>">
-                <option <%= permissions[i].permissionRequired === 'USER' ? 'selected' : '' %>>USER</option>
-                <option <%= permissions[i].permissionRequired === 'MANAGER' ? 'selected' : '' %>>MANAGER</option>
-                <option <%= permissions[i].permissionRequired === 'ADMIN' ? 'selected' : '' %>>ADMIN</option>
-              </select>
-            </td>
-          <% }
-          if(i % 4 === 3) { %>
+          <% if(i % 4 === 3) { %>
             </tr>
-          <% }
-        } %>
+          <% } %>
+        <% } %>
       </table>
       <div class="pull-right">
         <button id="btnSave" class="btn btn-primary"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;Save</button>
       </div>
     </div>
 
+    <%= include partials/flash.ejs %>
     <%= include partials/scripts.ejs %>
     <script src="/js/permissions.js"></script>
   </body>
