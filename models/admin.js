@@ -13,7 +13,7 @@ module.exports = {
     };
     request.get(options, (err, response, body) => callback(err, body));
   },
-  audit: function(req, callback) {
+  getLog: function(req, callback) {
     var url = apiUrl + '/admin/audit';
     var options = {headers: helper.generateAuthorizationHeader(req.user)};
     debug(options);
@@ -31,6 +31,39 @@ module.exports = {
         debug(log);
       }
       return callback(err, log);
+    });
+  },
+  getPermissions: function(req, callback) {
+    var url = apiUrl + '/admin/permissions';
+    var options = {headers: helper.generateAuthorizationHeader(req.user)};
+    debug(options);
+    request.get(url, options, (err, response, body) => {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      var permissions = JSON.parse(body);
+      if(permissions.error) {
+        err = new Error(permissions.data);
+      }
+      else {
+        permissions = permissions.data;
+        debug(permissions);
+      }
+      return callback(err, permissions);
+    });
+  },
+  createPermission: function(req, callback) {
+    //TODO: validate input
+    var options = {
+      uri: apiUrl + '/admin/permissions',
+      json: true,
+      body: req.body,
+      headers: helper.generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.post(options, (err, response, body) => {
+      callback(err, body);
     });
   }
 };

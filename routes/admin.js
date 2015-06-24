@@ -12,10 +12,10 @@ module.exports = function() {
     });
   });
 
-  router.get('/', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
-    admin.audit(req, (error, result) => {
+  router.get('/log', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
+    admin.getLog(req, (error, result) => {
       if(!error) {
-       res.render('admin', {
+        res.render('log', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
           log: result
@@ -26,6 +26,33 @@ module.exports = function() {
       }
     });
   });
+
+  router.get('/permissions', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
+    admin.getPermissions(req, (error, result) => {
+      if(!error) {
+        res.render('permissions', {
+          username: req.user.name,
+          permissionLevel: req.user.permissionLevel,
+          permissions: result
+        });
+      }
+      else {
+        helper.handleError(error, req, res);
+      }
+    });
+  });
+
+  router.post('/permissions', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
+    admin.createPermission(req, (error, result) => {
+      if(!error) {
+        res.json(true);
+      }
+      else {
+        helper.handleError(error, req, res);
+      }
+    });
+  });
+
 
   return router;
 };
