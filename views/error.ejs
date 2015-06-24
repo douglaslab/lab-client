@@ -9,10 +9,12 @@
     </div>
     <div class="container">
       <h2><%= message %></h2>
-      <h3><%= error.status %></h3>
-      <pre><%= error.stack %></pre>
+      <% if (error.status && error.stack) { %>
+        <h3>Status: <%= error.status %></h3>
+        <h4>Stack Trace:</h4>
+        <pre><%= error.stack %></pre>
+      <% } %>
     </div>
-
     <%= include partials/scripts.ejs %>
   </body>
 </html>
