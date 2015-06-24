@@ -29,6 +29,12 @@ module.exports = function(passport) {
     users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
+  router.put('/', helper.isLoggedIn, helper.isManager, (req, res, next) => {
+    req.params.email = req.user.email;
+    console.log(req.params);
+    //users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  });
+
   router.delete('/:email', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
     users.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
