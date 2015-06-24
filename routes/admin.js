@@ -48,7 +48,7 @@ module.exports = function() {
         res.json(true);
       }
       else {
-        helper.handleError(error, req, res);
+        helper.handleErrorJSON(res, error);
       }
     });
   });

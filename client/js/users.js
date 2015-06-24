@@ -66,7 +66,7 @@ var deleteUser = function(email) {
       location.reload();
     }
     else {
-      flash(error);
+      flash(error, true);
     }
   });
 };

@@ -2,7 +2,10 @@
 'use strict';
 
 var flash = function(message, error) {
-  $('#message').text(message).attr('class', error ? 'text-danger' : '');
+  $('#message').text(message);
+  if(error) {
+    $('#message').addClass('text-danger');
+  }
 };
 
 var serverCall = function(params, callback) {
@@ -17,7 +20,8 @@ var serverCall = function(params, callback) {
       }
     })
     .fail((xhr, status, error) => {
-      console.error(error, null);
+      console.error(error);
+      callback(error, null);
     });
 };
 
