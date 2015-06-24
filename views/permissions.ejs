@@ -18,7 +18,7 @@
         <% for(i = 0; i < 4 * 4; i++) {
           if(i % 4 === 0) { %>
             <tr>
-              <td><%= permissions[i].element %></td>
+              <td><b><%= permissions[i].element %></b></td>
               <td>
                 <select class="permission" data-element="<%= permissions[i].element %>" data-action="<%= permissions[i].action %>">
                   <option <%= permissions[i].permissionRequired === 'USER' ? 'selected' : '' %>>USER</option>
@@ -41,10 +41,11 @@
         } %>
       </table>
       <div class="pull-right">
-        <button class="btn btn-primary"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;Save</button>
+        <button id="btnSave" class="btn btn-primary"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;Save</button>
       </div>
     </div>
 
     <%= include partials/scripts.ejs %>
+    <script src="/js/permissions.js"></script>
   </body>
 </html>

@@ -43,5 +43,17 @@ module.exports = function() {
     });
   });
 
+  router.post('/permissions', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
+    admin.createPermission(req, (error, result) => {
+      if(!error) {
+        res.json(true);
+      }
+      else {
+        helper.handleError(error, req, res);
+      }
+    });
+  });
+
+
   return router;
 };

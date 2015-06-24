@@ -44,13 +44,26 @@ module.exports = {
       }
       var permissions = JSON.parse(body);
       if(permissions.error) {
-        err = new Error(log.data);
+        err = new Error(permissions.data);
       }
       else {
         permissions = permissions.data;
         debug(permissions);
       }
       return callback(err, permissions);
+    });
+  },
+  createPermission: function(req, callback) {
+    //TODO: validate input
+    var options = {
+      uri: apiUrl + '/admin/permissions',
+      json: true,
+      body: req.body,
+      headers: helper.generateAuthorizationHeader(req.user)
+    };
+    debug(options);
+    request.post(options, (err, response, body) => {
+      callback(err, body);
     });
   }
 };
