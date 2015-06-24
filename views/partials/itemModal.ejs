@@ -1,0 +1,30 @@
+    <!-- Item Modal -->
+    <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="itemModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form-inline" id="itemForm">
+              <div class="row">
+                <div class="col-sm-5">
+                  <input type="text" class="form-control input-md property" placeholder="property name">
+                </div>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control input-md value" placeholder="property value">
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-sm add-prop" title="add property">+</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>

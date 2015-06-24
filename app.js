@@ -12,8 +12,9 @@ var flash = require('connect-flash');
 var passport = require('passport');
 
 var routes = require('./routes/index');
-var userRoutes = require('./routes/users');
 var adminRoutes = require('./routes/admin');
+var itemRoutes = require('./routes/items');
+var userRoutes = require('./routes/users');
 
 var app = express();
 
@@ -45,39 +46,26 @@ app.use(passport.session());
 
 // routes configuration
 app.use('/', routes());
+app.use('/admin', adminRoutes());
+app.use('/items', itemRoutes());
 app.use('/users', userRoutes(passport));
-app.use('/admin', adminRoutes(passport));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('Page Not Found (' + req.url + ')');
   err.status = 404;
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) { // eslint-disable-line no-unused-vars
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
+// error handler
 app.use(function(err, req, res, next) { // eslint-disable-line no-unused-vars
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: (app.get('env') === 'development') ? err : {},
+    username: (req.user && req.user.name) || '',
+    permissionLevel: (req.user && req.user.permissionLevel) || ''
   });
 });
-
 
 module.exports = app;
