@@ -30,7 +30,6 @@ module.exports = function() {
   router.get('/permissions', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
     admin.getPermissions(req, (error, result) => {
       if(!error) {
-        console.log(result);
         res.render('permissions', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
