@@ -3,11 +3,12 @@
 var gulp = require('gulp');
 var bower = require('main-bower-files');
 var gulpFilter = require('gulp-filter');
+var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
 var minifyCSS = require('gulp-minify-css');
 var babel = require('gulp-babel');
 var clean = require('gulp-rimraf');
+var devEnvironment = (process.env.NODE_ENV || 'development') === 'development';
 //var debug = require('gulp-debug');
 
 
@@ -52,10 +53,8 @@ gulp.task('client', function() {
 
   gulp.src('client/**')
     .pipe(jsFilter)
-    .pipe(sourcemaps.init())
     .pipe(babel())
-    .pipe(uglify())
-    .pipe(sourcemaps.write('.'))
+    .pipe(gulpif(!devEnvironment, uglify()))
     .pipe(gulp.dest(dist.dir))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)

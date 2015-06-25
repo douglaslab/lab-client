@@ -3,3 +3,9 @@ body {
   padding-bottom: 40px;
   background-color: #eee;
 }
+
+.control-group.error input.parsley-validated{
+    color: #b94a48 !important;
+    background-color: #f2dede !important;
+    border: 1px solid #EED3D7 !important;
+}

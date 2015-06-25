@@ -19,7 +19,8 @@
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="name" placeholder="Enter name" value="<%= username %>">
+              <input type="text" class="form-control" id="name" placeholder="Enter name"
+                value="<%= username %>" required minlength="3" maxlength="50">
             </div>
           </div>
           <div class="form-group">
@@ -31,13 +32,14 @@
           <div class="form-group">
             <label for="password1" class="col-sm-2 control-label">Password:</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="password1" placeholder="Provide password">
+              <input type="password" class="form-control" id="password1" placeholder="Provide password" minlength="8" required>
             </div>
           </div>
           <div class="form-group">
             <label for="password2" class="col-sm-2 control-label">Verify password:</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="password2" placeholder="Repeat password">
+              <input type="password" class="form-control" id="password2" minlength="8"
+                placeholder="Repeat password" required data-parsley-equalto="#password1" data-parsley-equalto-message="The password confirmation should match the password">
             </div>
           </div>
         </form>
@@ -46,10 +48,14 @@
         </div>
       </div>
     </div>
-
+    <p id="relogin" class="hidden text-center">
+      Your settings have been updated - please relogin. (You'll be automatically logged out in <span id="timer">5</span> seconds)
+    </p>
 
     <%= include partials/flash.ejs %>
     <%= include partials/scripts.ejs %>
+    <script src="/vendor/js/parsley.min.js"></script>
     <script src="/js/settings.js"></script>
+
   </body>
 </html>

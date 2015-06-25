@@ -3,19 +3,22 @@
 
 var validateForm = function() {
   //TODO: validate input fields and show errors
-  var fields = {
-    name: $('#name').val(),
-    school: $('#school').val(),
-    password: $('#password1').val(),
-    permissionLevel: $('#permissionLevel').val()
-  };
-  return fields;
+  if($('#settingsForm').parsley().validate()) {
+    return {
+      name: $('#name').val(),
+      school: $('#school').val(),
+      password: $('#password1').val(),
+      permissionLevel: $('#permissionLevel').val()
+    };
+  }
+  else {
+    return null;
+  }
 };
 
 var saveSettings = function() {
   var data = validateForm();
   if(!data) {
-    flash('wrong data provided', true);
     return;
   }
 
@@ -31,13 +34,31 @@ var saveSettings = function() {
     }
     else {
       $('#settingsForm :input, #btnSave').prop('disabled', true);
-      flash('Your settings have been updated - please relogin (you\'ll be automatically logged out in 5 seconds)', false);
-      setTimeout(() => {location.href = '/users/logout'; }, 5000);
+      $('#relogin').removeClass('hidden');
+      setInterval(() => {
+        var timer = parseInt($('#timer').text(), 0);
+        if (!timer) {
+          location.href = '/users/logout';
+        }
+        else {
+          $('#timer').text(timer - 1);
+        }
+      }, 1000);
     }
   });
 };
 
 
 $(function() {
+  $('#settingsForm').parsley({
+    focus: 'first',
+    successClass: 'has-success',
+    errorClass: 'has-error',
+    classHandler: function(el) {
+      return el.$element.closest('.form-group');
+    },
+    errorsWrapper: '<span class="help-block"></span>',
+    errorElem: '<span></span>'
+  });
   $('#btnSave').on('click', saveSettings);
 });
