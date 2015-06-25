@@ -6,12 +6,6 @@ module.exports = function() {
   var admin = require('../models/admin');
   var helper = require('../models/routerHelper');
 
-  router.get('/apihealth', (req, res, next) => {
-    admin.getApiHealth((err, result) => {
-      res.json({data: {online: (err || result.error) ? false : result.data.online}});
-    });
-  });
-
   router.get('/log', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
     admin.getLog(req, (error, result) => {
       if(!error) {

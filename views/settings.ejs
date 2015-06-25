@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <%= include partials/head.ejs %>
+  </head>
+  <body>
+    <%= include partials/navbar.ejs %>
+    <div class="page-header text-center">
+      <h1>User Settings</h1>
+    </div>
+    <div class="row">
+      <div class="col-lg-offset-3 col-lg-6">
+        <form class="form-horizontal" id="settingsForm">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <p class="form-control-static" id="email"><%= email %></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="name" placeholder="Enter name" value="<%= username %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="school" class="col-sm-2 control-label">School:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="school" placeholder="Enter school" value="<%= school %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password1" class="col-sm-2 control-label">Password:</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="password1" placeholder="Provide password">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password2" class="col-sm-2 control-label">Verify password:</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="password2" placeholder="Repeat password">
+            </div>
+          </div>
+        </form>
+        <div class="pull-right">
+          <button id="btnSave" class="btn btn-primary"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;Save</button>
+        </div>
+      </div>
+    </div>
+
+
+    <%= include partials/flash.ejs %>
+    <%= include partials/scripts.ejs %>
+    <script src="/js/settings.js"></script>
+  </body>
+</html>
