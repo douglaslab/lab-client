@@ -14,9 +14,9 @@
       </button>
     </div>
     <div class="container">
-      <table class="table table-striped">
+      <table class="table table-bordered table-striped">
         <tr>
-          <th></th>
+          <th>#</th>
           <th>ID</th>
           <th>Properties</th>
           <th></th>
@@ -36,18 +36,12 @@
             } %>
           </td>
           <td>
-            <div class="btn-group" role="group">
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-md" data-edit="<%= items[i].id %>">
-                  <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
-                </button>
-              </div>
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-md" data-delete="<%= items[i].id %>">
-                  <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
-                </button>
-              </div>
-            </div>
+            <button type="button" class="btn btn-sm btn-default" data-edit="<%= items[i].id %>">
+              <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+            </button>
+            <button type="button" class="btn btn-sm btn-danger" data-delete="<%= items[i].id %>">
+              <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+            </button>
           </td>
         </tr>
         <% } %>
