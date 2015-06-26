@@ -9,24 +9,24 @@
           <div class="modal-body">
             <form role="form" id="userForm">
               <div class="form-group">
-                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" required>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" id="name" placeholder="Enter name">
+                <input type="text" class="form-control" id="name" placeholder="Enter name" required minlength="3" maxlength="50">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" id="school" placeholder="Enter school">
+                <input type="text" class="form-control" id="school" placeholder="Enter school" maxlength="60">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" id="password1" placeholder="Provide password">
+                <input type="password" class="form-control" id="password1" placeholder="Provide password" minlength="8" maxlength="64" required>
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" id="password2" placeholder="Repeat password">
+                <input type="password" class="form-control" id="password2" minlength="8" maxlength="64" placeholder="Repeat password" required data-parsley-equalto="#password1" data-parsley-equalto-message="The password confirmation should match the password">
               </div>
               <div class="form-group">
                 <label for="permissionLevel">Permission level:</label>
                 <select class="form-control" id="permissionLevel">
-                  <option>USER</option>
+                  <option selected>USER</option>
                   <option>MANAGER</option>
                   <option>ADMIN</option>
                 </select>
