@@ -2,7 +2,6 @@
 'use strict';
 
 var validateForm = function() {
-  //TODO: validate input fields and show errors
   if($('#settingsForm').parsley().validate()) {
     return {
       name: $('#name').val(),
@@ -50,6 +49,7 @@ var saveSettings = function() {
 
 
 $(function() {
+  $('#btnSave').on('click', saveSettings);
   $('#settingsForm').parsley({
     focus: 'first',
     successClass: 'has-success',
@@ -60,5 +60,4 @@ $(function() {
     errorsWrapper: '<span class="help-block"></span>',
     errorElem: '<span></span>'
   });
-  $('#btnSave').on('click', saveSettings);
 });

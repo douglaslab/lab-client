@@ -6,25 +6,34 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="itemModalLabel">Modal title</h4>
           </div>
-          <div class="modal-body">
-            <form role="form-inline" id="itemForm">
+          <div class="modal-body text-center">
+            <form class="form-inline" id="itemForm">
               <div class="row">
-                <div class="col-sm-5">
+                <div class="form-group">
                   <input type="text" class="form-control input-md property" placeholder="property name">
                 </div>
-                <div class="col-sm-5">
+                <div class="form-group">
                   <input type="text" class="form-control input-md value" placeholder="property value">
                 </div>
-                <div class="col-sm-2">
-                  <button class="btn btn-sm add-prop" title="add property">+</button>
+                <div class="btn-group" role="group">
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-md remove-prop" title="remove property">
+                      <span class="glyphicon glyphicon-minus-sign"></span>
+                    </button>
+                  </div>
+                  <div class="btn-group" role="group">
+                    <button class="btn btn-md add-prop" title="add property">
+                      <span class="glyphicon glyphicon-plus-sign"></span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </div><!-- .row -->
             </form>
-          </div>
+          </div><!-- /.modal-body -->
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" id="btnSave">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
+          </div><!-- /.modal-footer -->
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->

@@ -3,15 +3,18 @@
 'use strict';
 
 var validateForm = function() {
-  //TODO: validate input fields and show errors
-  var fields = {
-    email: $('#email').val(),
-    name: $('#name').val(),
-    school: $('#school').val(),
-    password: $('#password1').val(),
-    permissionLevel: $('#permissionLevel').val()
-  };
-  return fields;
+  if($('#userForm').parsley().validate()) {
+    return {
+      email: $('#email').val(),
+      name: $('#name').val(),
+      school: $('#school').val(),
+      password: $('#password1').val(),
+      permissionLevel: $('#permissionLevel').val()
+    };
+  }
+  else {
+    return null;
+  }
 };
 
 var addUser = function() {
@@ -35,7 +38,7 @@ var addUser = function() {
   });
 };
 
-var editUser = function(email) {
+var updateUser = function(email) {
   var data = validateForm();
   if(!data) {
     return;
@@ -91,7 +94,7 @@ $(function() {
     $('#name').val(name);
     $('#school').val(school);
     $('#permissionLevel').val(permission);
-    $('#btnSave').on('click', () => editUser(email));
+    $('#btnSave').on('click', () => updateUser(email));
     $('#userModal').modal('show');
   });
 
@@ -101,5 +104,21 @@ $(function() {
     if(result) {
       deleteUser(email);
     }
+  });
+
+  $('#userForm').parsley({
+    focus: 'first',
+    successClass: 'has-success',
+    errorClass: 'has-error',
+    classHandler: function(el) {
+      return el.$element.closest('.form-group');
+    },
+    errorsWrapper: '<span class="help-block"></span>',
+    errorElem: '<span></span>'
+  });
+
+  //reset modal after it's closed
+  $('#userModal').on('hidden.bs.modal', function() {
+    $('#userForm').parsley().reset();
   });
 });
