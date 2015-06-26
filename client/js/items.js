@@ -5,17 +5,52 @@
 var removeProp = function(e) {
   e.preventDefault();
   $(this).closest('.row').remove();
+  $('#itemForm > .row:last').find('.add-prop').prop('disabled', false);
 };
 
 var addProp = function(e) {
   e.preventDefault();
   var lastRow = $('#itemForm > .row:last');
+  if($(lastRow).find('.property').val() === '' || $(lastRow).find('.value').val() === '') {
+    return; //do not allow adding empty lines
+  }
   var newRow = lastRow.clone();
+  lastRow.find('.remove-prop').prop('disabled', false); //disable remove on previous line
   newRow.find('.property').val('');
   newRow.find('.value').val('');
-  newRow.appendTo('#itemForm');
-  $(this).text('-').attr('title', 'remove property').off('click').on('click', removeProp);
   newRow.find('.add-prop').on('click', addProp);
+  newRow.find('.remove-prop').on('click', removeProp).prop('disabled', false);
+  newRow.appendTo('#itemForm');
+  $(this).prop('disabled', true); //disable the original add button
+};
+
+var populateModal = function(btn) {
+  var values = {};
+  var properties = $(btn).parentsUntil('tr').parent().find('.properties > .property');
+  $(properties).each(i => {
+    let prop = $(properties)[i];
+    let name = $(prop).find('.name').text();
+    let value = $(prop).find('.value').text();
+    values[name] = value;
+  });
+  let first = true;
+  for(let key in values) {
+    let lastRow = $('#itemForm > .row:last');
+    if(first) {
+      lastRow.find('.property').val(key);
+      lastRow.find('.value').val(values[key]);
+      first = false;
+    }
+    else {
+      let newRow = lastRow.clone();
+      lastRow.find('.add-prop').prop('disabled', true);
+      newRow.find('.property').val(key);
+      newRow.find('.value').val(values[key]);
+      newRow.find('.add-prop').on('click', addProp);
+      newRow.find('.remove-prop').on('click', removeProp);
+      newRow.appendTo('#itemForm');
+    }
+  }
 };
 
 var validateProperties = function() {
@@ -25,38 +60,11 @@ var validateProperties = function() {
   for(let i = 0; i < rows.length; i++) {
     let name = $(rows[i]).find('.property').val();
     let value = $(rows[i]).find('.value').val();
-    properties[name] = value;
+    if(name && value) {
+      properties[name] = value;
+    }
   }
   return properties;
-};
-
-var populateModal = function(properties) {
-  var values = {};
-  $(properties).each(i => {
-    let prop = $(properties)[i];
-    let name = $(prop).find('.name').text();
-    let value = $(prop).find('.value').text();
-    values[name] = value;
-  });
-  let first = true;
-  let button = $('#itemForm > .row:last').find('.add-prop').clone().on('click', addProp);
-  for(let key in values) {
-    let lastRow = $('#itemForm > .row:last');
-    if(first) {
-      lastRow.find('.property').val(key);
-      lastRow.find('.value').val(values[key]);
-      lastRow.find('.add-prop').text('-').attr('title', 'remove property').off('click').on('click', removeProp);
-      first = false;
-    }
-    else {
-      let newRow = lastRow.clone();
-      newRow.find('.property').val(key);
-      newRow.find('.value').val(values[key]);
-      newRow.find('.add-prop').text('-').attr('title', 'remove property').off('click').on('click', removeProp);
-      newRow.appendTo('#itemForm');
-    }
-  }
-  button.appendTo($('#itemForm > .row:last').find('.add-prop').parent());
 };
 
 var addItem = function() {
@@ -80,7 +88,7 @@ var addItem = function() {
   });
 };
 
-var editItem = function(id) {
+var updateItem = function(id) {
   var data = validateProperties();
   if(!data) {
     return;
@@ -101,11 +109,9 @@ var editItem = function(id) {
   });
 };
 
-var deleteItem = function() {
-  var id = $(this).data('delete');
-  var result = confirm('are you sure you want to delete item ' + id);
-  if(!result) {
-      return;
+var deleteItem = function(id) {
+  if(!confirm('are you sure you want to delete item ' + id)) {
+    return;
   }
   serverCall({
     url: '/items/' + id,
@@ -126,21 +132,24 @@ $(function() {
   $('#btnAdd').on('click', function() {
     $('#itemModalLabel').text('Add Item');
     $('#itemForm').trigger('reset');
+    $('.remove-prop').on('click', removeProp).prop('disabled', true);
+    $('.add-prop').on('click', addProp);
     $('#btnSave').on('click', addItem);
     $('#itemModal').modal('show');
   });
 
   $('button[data-edit]').on('click', function() {
     let id = $(this).data('edit');
-    populateModal($(this).parent().parent().find('.properties > .property'));
+    populateModal($(this));
     $('#itemModalLabel').text('Edit Item ' + id);
-    $('#btnSave').on('click', () => editItem(id));
+    $('#btnSave').on('click', () => updateItem(id));
     $('#itemModal').modal('show');
   });
 
-  $('button[data-delete]').on('click', deleteItem);
-
-  $('.add-prop').on('click', addProp);
+  $('button[data-delete]').on('click', function() {
+    let id = $(this).data('delete');
+    deleteItem(id);
+  });
 
   //reset modal after it's closed
   $('#itemModal').on('hidden.bs.modal', function() {
