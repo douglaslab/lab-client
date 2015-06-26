@@ -7,24 +7,29 @@
             <h4 class="modal-title" id="userModalLabel">Modal title</h4>
           </div>
           <div class="modal-body">
-            <form role="form" id="userForm">
+            <form class="form" id="userForm">
               <div class="form-group">
+                <label for="email" class="control-label">Email:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter email" required>
               </div>
               <div class="form-group">
+                <label for="name" class="control-label">User name:</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name" required minlength="3" maxlength="50">
               </div>
               <div class="form-group">
+                <label for="school" class="control-label">School:</label>
                 <input type="text" class="form-control" id="school" placeholder="Enter school" maxlength="60">
               </div>
               <div class="form-group">
+                <label for="password1" class="control-label">Password (min. 8 characters):</label>
                 <input type="password" class="form-control" id="password1" placeholder="Provide password" minlength="8" maxlength="64" required>
               </div>
               <div class="form-group">
+                <label for="password2" class="control-label">Verify password:</label>
                 <input type="password" class="form-control" id="password2" minlength="8" maxlength="64" placeholder="Repeat password" required data-parsley-equalto="#password1" data-parsley-equalto-message="The password confirmation should match the password">
               </div>
               <div class="form-group">
-                <label for="permissionLevel">Permission level:</label>
+                <label for="permissionLevel" class="control-label">Permission level:</label>
                 <select class="form-control" id="permissionLevel">
                   <option selected>USER</option>
                   <option>MANAGER</option>
