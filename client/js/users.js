@@ -116,4 +116,9 @@ $(function() {
     errorsWrapper: '<span class="help-block"></span>',
     errorElem: '<span></span>'
   });
+
+  //reset modal after it's closed
+  $('#userModal').on('hidden.bs.modal', function() {
+    $('#userForm').parsley().reset();
+  });
 });
