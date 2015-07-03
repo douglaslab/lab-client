@@ -1,6 +1,6 @@
 {
   "name": "DLIMS Demo App",
-  "description": "sample cliengt taht uses DLIMS API",
+  "description": "A sample client demonstrating DLIMS API",
   "keywords": ["DouglasLabs", "inventory", "sample", "api"],
   "logo": "http://i.imgur.com/aP7zBCa.png",
   "repository": "https://github.com/douglaslab/charlie",
