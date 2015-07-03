@@ -13,6 +13,7 @@
     },
     "NPM_CONFIG_PRODUCTION": {
       "description": "force Heroku to install devDependencies, so it can re-build the app",
+      "required": true,
       "value": false
     }
   },
