@@ -32,7 +32,6 @@
     "ejs": "~2.3.1",
     "express": "~4.13.0",
     "express-session": "^1.11.3",
-    "lodash": "^3.9.3",
     "moment": "^2.10.3",
     "morgan": "~1.6.0",
     "passport": "^0.2.2",
