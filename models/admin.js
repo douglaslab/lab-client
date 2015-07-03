@@ -2,7 +2,7 @@
 
 var debug = require('debug')('admin');
 var request = require('request');
-var apiUrl = require('../configs/api').apiUrl;
+var apiUrl = process.env.API_URL;
 var helper = require('./apiHelper');
 
 module.exports = {

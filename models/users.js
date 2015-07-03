@@ -4,7 +4,7 @@ var debug = require('debug')('users');
 var request = require('request');
 var _ = require('lodash');
 var moment = require('moment');
-var apiUrl = require('../configs/api').apiUrl;
+var apiUrl = process.env.API_URL;
 var helper = require('./apiHelper');
 
 module.exports = {

@@ -25,7 +25,16 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, () => {
+  console.log('Server listening on port %s', port);
+  if(process.env.API_URL) {
+    console.log('API URL: %s', process.env.API_URL);
+  }
+  else {
+    console.error('API_URL environment variable is empty. Aborting!');
+    process.exit(1);
+  }
+});
 server.on('error', onError);
 server.on('listening', onListening);
 
