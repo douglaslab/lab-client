@@ -2,7 +2,6 @@
 
 var debug = require('debug')('users');
 var request = require('request');
-var _ = require('lodash');
 var moment = require('moment');
 var apiUrl = process.env.API_URL;
 var helper = require('./apiHelper');
@@ -52,9 +51,10 @@ module.exports = {
         err = new Error(users.data);
       }
       else {
-        users = _.forEach(users.data, (user) => {
+        users = users.data.map((user) => {
           user.created = moment(user.created).format('MM/DD/YYYY hh:mm:ss');
           user.modified = moment(user.modified).format('MM/DD/YYYY hh:mm:ss');
+          return user;
         });
         debug(users);
       }
