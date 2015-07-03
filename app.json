@@ -8,13 +8,7 @@
   "env": {
     "API_URL": {
       "description": "DLIMS API URL - cannot be empty!",
-      "required": true,
-      "value": "https://bionano-api.herokuapp.com"
-    },
-    "NPM_CONFIG_PRODUCTION": {
-      "description": "force Heroku to install devDependencies, so it can re-build the app",
-      "required": true,
-      "value": "false"
+      "required": true
     }
   },
   "addons": [
