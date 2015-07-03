@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "doc": "jsdoc -c ./jsdoc.json .",
     "build": "bower install && gulp",
-    "dev": "bower install && gulp && node --harmony ./bin/www",
+    "dev": "set API_URL=http://localhost:3000&& bower install && gulp && node --harmony ./bin/www",
     "postinstall": "bower install && gulp"
   },
   "repository": {
