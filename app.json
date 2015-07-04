@@ -1,13 +1,13 @@
 {
   "name": "lab-client",
-  "description": "Douglas Lab sample client demonstrating lab-api",
+  "description": "Sample client for lab-api",
   "keywords": ["DouglasLab", "inventory", "sample", "api"],
-  "logo": "http://i.imgur.com/ZO9IJx0.png",
-  "repository": "https://github.com/douglaslab/charlie",
+  "logo": "http://i.imgur.com/9YsBP0d.png",
+  "repository": "https://github.com/douglaslab/lab-client",
   "success_url": "/",
   "env": {
     "API_URL": {
-      "description": "lab-api URL -- cannot be empty!",
+      "description": "lab-api URL (cannot be empty!)",
       "required": true
     }
   },
