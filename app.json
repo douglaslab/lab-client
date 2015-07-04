@@ -7,7 +7,7 @@
   "success_url": "/",
   "env": {
     "LAB_API_URL": {
-      "description": "The URL of deployed 'lab-api' service",
+      "description": "The URL of deployed 'lab-api' service (e.g. https://lab-api.example.com/)",
       "required": true
     }
   },
