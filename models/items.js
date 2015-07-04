@@ -2,7 +2,7 @@
 
 var debug = require('debug')('users');
 var request = require('request');
-var apiUrl = process.env.API_URL;
+var apiUrl = process.env.LAB_API_URL;
 var helper = require('./apiHelper');
 
 module.exports = {

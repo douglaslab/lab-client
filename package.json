@@ -10,19 +10,19 @@
     "lint": "eslint .",
     "doc": "jsdoc -c ./jsdoc.json .",
     "build": "bower install && gulp",
-    "dev": "set API_URL=http://localhost:3000&& bower install && gulp && node --harmony ./bin/www",
+    "dev": "set LAB_API_URL=http://localhost:3000&& bower install && gulp && node --harmony ./bin/www",
     "postinstall": "bower install && gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TravelingTechGuy/charlie.git"
+    "url": "git+https://github.com/douglaslab/lab-client.git"
   },
   "author": "Guy Vider",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/TravelingTechGuy/charlie/issues"
+    "url": "https://github.com/douglaslab/lab-client/issues"
   },
-  "homepage": "https://github.com/TravelingTechGuy/charlie#readme",
+  "homepage": "https://github.com/douglaslab/lab-client#readme",
   "dependencies": {
     "body-parser": "~1.13.1",
     "bower": "^1.4.1",

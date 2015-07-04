@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('charlie:server');
+var debug = require('debug')('lab-client:server');
 var http = require('http');
 
 /**
@@ -27,11 +27,11 @@ var server = http.createServer(app);
 
 server.listen(port, () => {
   console.log('Server listening on port %s', port);
-  if(process.env.API_URL) {
-    console.log('API URL: %s', process.env.API_URL);
+  if(process.env.LAB_API_URL) {
+    console.log('API URL: %s', process.env.LAB_API_URL);
   }
   else {
-    console.error('API_URL environment variable is empty. Aborting!');
+    console.error('LAB_API_URL environment variable is empty. Aborting!');
     process.exit(1);
   }
 });

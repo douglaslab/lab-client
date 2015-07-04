@@ -1,13 +1,13 @@
 {
-  "name": "DLIMS Demo App",
-  "description": "A sample client demonstrating DLIMS API",
-  "keywords": ["DouglasLabs", "inventory", "sample", "api"],
-  "logo": "http://i.imgur.com/aP7zBCa.png",
-  "repository": "https://github.com/douglaslab/charlie",
+  "name": "lab-client",
+  "description": "Sample client for lab-api",
+  "keywords": ["DouglasLab", "inventory", "sample", "api"],
+  "logo": "http://i.imgur.com/9YsBP0d.png",
+  "repository": "https://github.com/douglaslab/lab-client",
   "success_url": "/",
   "env": {
-    "API_URL": {
-      "description": "DLIMS API URL - cannot be empty!",
+    "LAB_API_URL": {
+      "description": "The URL of deployed 'lab-api' service (e.g. https://lab-api.example.com/)",
       "required": true
     }
   },
