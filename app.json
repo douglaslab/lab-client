@@ -6,8 +6,8 @@
   "repository": "https://github.com/douglaslab/lab-client",
   "success_url": "/",
   "env": {
-    "API_URL": {
-      "description": "lab-api URL (cannot be empty!)",
+    "LAB_API_URL": {
+      "description": "The URL of deployed 'lab-api' service",
       "required": true
     }
   },
