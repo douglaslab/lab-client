@@ -2,7 +2,7 @@
   "restartable": "rs",
   "ignore": ["tests/*", ".git", "node_modules/**/node_modules"],
   "execMap": {
-    "": "node --harmony"
+    "execMap": "node --harmony"
   },
   "env": {
     "NODE_ENV": "development",
