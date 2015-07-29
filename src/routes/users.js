@@ -1,12 +1,12 @@
-/* eslint-disable no-unused-vars */
-'use strict';
+import express from 'express';
+import Users from '../models/users';
+import helper from '../models/routerHelper';
 
-module.exports = function(passport) {
-  var router = require('express').Router();
-  var users = require('../models/users');
-  var helper = require('../models/routerHelper');
+export default function(passport) {
+  var router = express.Router();
+  var users = new Users(global.apiUrl, global.apiOptions);
 
-  router.get('/', helper.isLoggedIn, helper.isManager, (req, res, next) => {
+  router.get('/', helper.isLoggedIn, helper.isManager, (req, res) => {
     users.get(req, (error, result) => {
       if(!error) {
         res.render('users', {
@@ -21,15 +21,15 @@ module.exports = function(passport) {
     });
   });
 
-  router.post('/', helper.isLoggedIn, helper.isManager, (req, res, next) => {
+  router.post('/', helper.isLoggedIn, helper.isManager, (req, res) => {
     users.create(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
-  router.put('/:email', helper.isLoggedIn, helper.isManager, (req, res, next) => {
+  router.put('/:email', helper.isLoggedIn, helper.isManager, (req, res) => {
     users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
-  router.delete('/:email', helper.isLoggedIn, helper.isAdmin, (req, res, next) => {
+  router.delete('/:email', helper.isLoggedIn, helper.isAdmin, (req, res) => {
     users.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
   });
 
@@ -39,7 +39,7 @@ module.exports = function(passport) {
     failureFlash: true
   }));
 
-  router.get('/logout', (req, res, next) => {
+  router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
   });
@@ -59,4 +59,4 @@ module.exports = function(passport) {
   });
 
   return router;
-};
+}

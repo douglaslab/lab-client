@@ -1,32 +1,16 @@
-'use strict';
-
+import moment from 'moment';
+import wrapper from 'lab-api-wrapper';
 var debug = require('debug')('users');
-var request = require('request');
-var moment = require('moment');
-var apiUrl = process.env.LAB_API_URL;
-var helper = require('./apiHelper');
+const DATE_FORMAT = 'MM/DD/YYYY hh:mm:ss';
 
-module.exports = {
-  login: function(req, email, password, callback) {
+export default class Admin {
+  constructor(apiUrl, options) {
+    this.users = new wrapper.Items(apiUrl, options);
+  }
+
+  login(req, email, password, callback) {
     debug('trying to log in user %s', email);
-    var url = apiUrl + '/users/login';
-    var options = {
-      'auth': {
-        'user': email,
-        'pass': password,
-        'sendImmediately': true
-      }
-    };
-
-    request.post(url, options, (err, response, result) => {
-      if(err) {
-        console.error(err);
-        return callback(err);
-      }
-      if (!result) {
-        return callback(null, false, req.flash('loginMessage', 'No user found.'));
-      }
-      result = JSON.parse(result);
+    this.users.login(email, password, (result) => {
       if(result.error) {
         return callback(null, false, req.flash('loginMessage', result.data));
       }
@@ -34,63 +18,40 @@ module.exports = {
         return callback(null, result.data);
       }
     });
-  },
-  get: function(req, callback) {
-    var options = {
-      uri: apiUrl + '/users',
-      headers: helper.generateAuthorizationHeader(req.user)
-    };
-    debug(options);
-    request.get(options, (err, response, body) => {
-      if(err) {
-        console.error(err);
-        return callback(err);
-      }
-      var users = JSON.parse(body);
+  }
+
+  get(req, callback) {
+    this.users.getUsers(req.user, (users) => {
       if(users.error) {
         err = new Error(users.data);
       }
       else {
         users = users.data.map((user) => {
-          user.created = moment(user.created).format('MM/DD/YYYY hh:mm:ss');
-          user.modified = moment(user.modified).format('MM/DD/YYYY hh:mm:ss');
+          user.created = moment(user.created).format(DATE_FORMAT);
+          user.modified = moment(user.modified).format(DATE_FORMAT);
           return user;
         });
         debug(users);
       }
       return callback(err, users);
     });
-  },
-  create: function(req, callback) {
-    //TODO: validate input
-    var options = {
-      uri: apiUrl + '/users',
-      json: true,
-      body: req.body,
-      headers: helper.generateAuthorizationHeader(req.user)
-    };
-    debug(options);
-    request.post(options, (err, response, body) => {
-      callback(err, body);
-    });
-  },
-  update: function(req, callback) {
-    var options = {
-      uri: apiUrl + '/users/' + req.params.email,
-      json: true,
-      body: req.body,
-      headers: helper.generateAuthorizationHeader(req.user)
-    };
-    debug(options);
-    request.put(options, (err, response, body) => callback(err, body));
-  },
-  delete: function(req, callback) {
-    var options = {
-      uri: apiUrl + '/users/' + req.params.email,
-      json: true,
-      headers: helper.generateAuthorizationHeader(req.user)
-    };
-    debug(options);
-    request.del(options, (err, response, body) => callback(err, body));
   }
-};
+
+  create(req, callback) {
+    //TODO: validate input
+    let newUser = req.body;
+    debug(newUser);
+    this.users.createUser(req.user, newUser, callback);
+  }
+
+  update(req, callback) {
+    //TODO: validate input
+    let newUser = req.body;
+    debug(newUser);
+    this.users.updateUser(req.user, req.params.email, newUser, callback);
+  }
+
+  delete(req, callback) {
+    this.users.deleteUser(req.user, req.params.email, callback);
+  }
+}

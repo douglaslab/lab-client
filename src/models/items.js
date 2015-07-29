@@ -13,9 +13,9 @@ export default class Admin {
 
   create(req, callback) {
     //TODO: validate input
-    var item = req.body;
-    debug(item);
-    this.items.createItem(req.user, item, callback);
+    var newItem = req.body;
+    debug(newItem);
+    this.items.createItem(req.user, newItem, callback);
   }
 
   update(req, callback) {
