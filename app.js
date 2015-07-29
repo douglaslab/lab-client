@@ -15,6 +15,7 @@ var routes = require('./routes/index');
 var adminRoutes = require('./routes/admin');
 var itemRoutes = require('./routes/items');
 var userRoutes = require('./routes/users');
+var uploadRoutes = require('./routes/upload');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/', routes());
 app.use('/admin', adminRoutes());
 app.use('/items', itemRoutes());
 app.use('/users', userRoutes(passport));
+app.use('/upload', uploadRoutes());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

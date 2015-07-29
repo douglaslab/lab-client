@@ -44,5 +44,19 @@ module.exports = function(passport) {
     res.redirect('/');
   });
 
+  router.get('/settings', helper.isLoggedIn, (req, res) => {
+    res.render('settings', {
+      username: req.user.name,
+      email: req.user.email,
+      school: req.user.school,
+      permissionLevel: req.user.permissionLevel
+    });
+  });
+
+  router.put('/settings', helper.isLoggedIn, helper.isManager, (req, res) => {
+    req.params.email = req.user.email;
+    users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  });
+
   return router;
 };

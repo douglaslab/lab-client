@@ -2,9 +2,10 @@
   "env": {
     "es6": true,
  	  "node": true,
-    "browser": true,
-    "jquery": true,
     "mocha": true
+  },
+  "ecmaFeatures": {
+    "modules": true
   },
   "rules": {
     "quotes": [2, "single", "avoid-escape"],
@@ -15,8 +16,8 @@
     "curly": [2, "all"],
     "no-spaced-func": 2,
     "no-unused-vars": 2,
-    "no-underscore-dangle": false,
-    "no-unused-expressions": false,
-    "new-cap": false
+    "no-underscore-dangle": 0,
+    "no-unused-expressions": 0,
+    "new-cap": 0
   }
 }

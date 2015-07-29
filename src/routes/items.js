@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
-'use strict';
+import express from 'express';
+import Items from '../models/items';
+import helper from '../models/routerHelper';
 
 module.exports = function() {
-  var router = require('express').Router();
-  var items = require('../models/items');
-  var helper = require('../models/routerHelper');
+  var router = express.Router();
+  var items = new Items(global.apiUrl, global.apiOptions);
 
   router.get('/', helper.isLoggedIn, (req, res, next) => {
     items.get(req, (error, result) => {

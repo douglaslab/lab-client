@@ -1,14 +1,18 @@
-'use strict';
-
+require('babel/register');  //allows mocha to pick up babel
 var gulp = require('gulp');
+var mocha = require('gulp-mocha');
+var babel = require('gulp-babel');
+var eslint = require('gulp-eslint');
+var argv = require('yargs').argv;
 var bower = require('main-bower-files');
 var gulpFilter = require('gulp-filter');
 var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
-var babel = require('gulp-babel');
 var clean = require('gulp-rimraf');
 var devEnvironment = (process.env.NODE_ENV || 'development') === 'development';
+var serverDir = 'src/**/*.js';
+
 //var debug = require('gulp-debug');
 
 
@@ -24,8 +28,13 @@ var getDist = function(vendor) {
   };
 };
 
-gulp.task('clean', function() {
+gulp.task('cleanClient', function() {
   return gulp.src(getDist().dir, {read: false})
+    .pipe(clean({force: true}));
+});
+
+gulp.task('cleanServer', function() {
+  return gulp.src('lib', {read: false})
     .pipe(clean({force: true}));
 });
 
@@ -45,7 +54,7 @@ gulp.task('bower', function() {
     .pipe(gulp.dest(dist.css));
 });
 
-gulp.task('client', function() {
+gulp.task('compileClient', function() {
   var dist = getDist();
   var jsFilter = gulpFilter('**/*.js');
   var cssFilter = gulpFilter('**/*.css');
@@ -65,6 +74,39 @@ gulp.task('client', function() {
     .pipe(gulp.dest(dist.dir));
 });
 
-gulp.task('default', ['clean'], function() {
-  return gulp.start(['client', 'bower']);
+gulp.task('lintServer', function () {
+  return gulp.src(serverDir)
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
+});
+
+gulp.task('compileServer', function() {
+  return gulp.src(serverDir)
+    .pipe(babel())
+    .pipe(gulp.dest('lib'));
+});
+
+gulp.task('server', ['cleanServer'], function() {
+  return gulp.start([/*'lintServer',*/ 'compileServer']);
+});
+
+gulp.task('client', ['cleanClient'], function() {
+  return gulp.start(['compileClient', 'bower']);
+});
+
+gulp.task('default', ['client', 'server']);
+
+gulp.task('watch', function() {
+  gulp.watch('src/**', ['server']);
+});
+
+gulp.task('test', function() {
+  var options = {
+    timeout: argv.timeout || 2000,
+    grep: argv.test
+  };
+  var stream = argv.file ? 'tests/' + argv.file + '.js' : 'tests/*.js';
+  return gulp.src(stream, {read: false})
+    .pipe(mocha(options));
 });

@@ -31,5 +31,6 @@ bower_components
 out
 docs
 
-# Ignore public folder, as we'll rebuild it every time
+# Ignore lib and public folders, as we'll rebuild them every time
+lib
 public

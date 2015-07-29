@@ -18,6 +18,7 @@
           <!-- views -->
           <ul class="nav navbar-nav">
             <li class="<%= typeof items !== 'undefined' ? 'active' : '' %>"><a href="/items">Items</a></li>
+            <li class="<%= typeof services !== 'undefined' ? 'active' : '' %>"><a href="/upload">Upload Files</a></li>
             <% if(typeof permissionLevel !== 'undefined' && ['ADMIN', 'MANAGER'].indexOf(permissionLevel) !== -1) { %>
               <li class="<%= typeof users !== 'undefined' ? 'active' : '' %>"><a href="/users">Users</a></li>
             <% } %>
@@ -33,7 +34,7 @@
                   <li><a href="/admin/log">Audit Log</a></li>
                   <li><a href="/admin/permissions">Permissions</a></li>
                 <% } %>
-                <li disabled><a href="/settings">Settings</a></li>
+                <li disabled><a href="/users/settings">Settings</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="/users/logout">Logout</a></li>
               </ul>
