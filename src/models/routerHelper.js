@@ -27,7 +27,6 @@ var Helper = {
   handleError: function(error, req, res) {
     console.error(error);
     res.render('error', {
-      message: error.message,
       error: error,
       username: req.user.name,
       permissionLevel: req.user.permissionLevel

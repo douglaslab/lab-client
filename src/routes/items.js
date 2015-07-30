@@ -6,35 +6,35 @@ module.exports = function() {
   var router = express.Router();
   var items = new Items(global.apiUrl, global.apiOptions);
 
-  router.get('/', helper.isLoggedIn, (req, res, next) => {
-    items.get(req, (error, result) => {
-      if(!error) {
+  router.get('/', helper.isLoggedIn, (req, res) => {
+    items.get(req, (result) => {
+      if(!result.error) {
         res.render('items', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
-          items: result
+          items: result.data
         });
       }
       else {
-        helper.handleError(error, req, res);
+        helper.handleError(result.data, req, res);
       }
     });
   });
 
-  router.post('/', helper.isLoggedIn, (req, res, next) => {
-    items.create(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  router.post('/', helper.isLoggedIn, (req, res) => {
+    items.create(req, (result) => res.json(result));
   });
 
-  router.put('/:id', helper.isLoggedIn, (req, res, next) => {
-    items.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  router.put('/:id', helper.isLoggedIn, (req, res) => {
+    items.update(req, (result) => res.json(result));
   });
 
-  router.put('/:id/:replace', helper.isLoggedIn, (req, res, next) => {
-    items.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  router.put('/:id/:replace', helper.isLoggedIn, (req, res) => {
+    items.update(req, (result) => res.json(result));
   });
 
-  router.delete('/:id', helper.isLoggedIn, (req, res, next) => {
-    items.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
+  router.delete('/:id', helper.isLoggedIn, (req, res) => {
+    items.delete(req, (result) => res.json(result));
   });
 
   return router;

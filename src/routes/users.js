@@ -12,7 +12,7 @@ export default function(passport) {
         res.render('users', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
-          users: result
+          users: result.data
         });
       }
       else {
@@ -22,15 +22,15 @@ export default function(passport) {
   });
 
   router.post('/', helper.isLoggedIn, helper.isManager, (req, res) => {
-    users.create(req, (err, result) => helper.handleErrorJSON(res, err, result));
+    users.create(req, (result) => res.json(result));
   });
 
   router.put('/:email', helper.isLoggedIn, helper.isManager, (req, res) => {
-    users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+    users.update(req, (result) => res.json(result));
   });
 
   router.delete('/:email', helper.isLoggedIn, helper.isAdmin, (req, res) => {
-    users.delete(req, (err, result) => helper.handleErrorJSON(res, err, result));
+    users.delete(req, (result) => res.json(result));
   });
 
   router.post('/login', passport.authenticate('local', {
@@ -55,7 +55,7 @@ export default function(passport) {
 
   router.put('/settings', helper.isLoggedIn, helper.isManager, (req, res) => {
     req.params.email = req.user.email;
-    users.update(req, (err, result) => helper.handleErrorJSON(res, err, result));
+    users.update(req, (result) => res.json(result));
   });
 
   return router;

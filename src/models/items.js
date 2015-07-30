@@ -1,7 +1,7 @@
 import wrapper from 'lab-api-wrapper';
 var debug = require('debug')('items');
 
-export default class Admin {
+export default class {
   constructor(apiUrl, options) {
     this.items = new wrapper.Items(apiUrl, options);
   }

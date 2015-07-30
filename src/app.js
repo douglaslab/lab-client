@@ -7,7 +7,8 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import flash from 'connect-flash';
-//import passport from 'passport';
+import passport from 'passport';
+
 //routes
 import routes from './routes/index';
 import adminRoutes from './routes/admin';
@@ -38,18 +39,17 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 //favicon
 app.use(favicon(path.join(__dirname, '..', 'public', 'images', 'favicon.ico')));
 
-// Passport configuration
-var passport = require('passport');
-require('./models/passport')(passport);
-app.use(passport.initialize());
-app.use(passport.session());
-
 //globals
 global.apiUrl = process.env.LAB_API_URL;
 global.apiOptions = {
   version: process.env.LAB_API_VERSION || '1.0.0',
   userAgent: 'lab-client'
 };
+
+// Passport configuration
+require('./models/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes configuration
 app.use('/', routes());

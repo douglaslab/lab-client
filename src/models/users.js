@@ -3,37 +3,22 @@ import wrapper from 'lab-api-wrapper';
 var debug = require('debug')('users');
 const DATE_FORMAT = 'MM/DD/YYYY hh:mm:ss';
 
-export default class Admin {
+export default class {
   constructor(apiUrl, options) {
-    this.users = new wrapper.Items(apiUrl, options);
-  }
-
-  login(req, email, password, callback) {
-    debug('trying to log in user %s', email);
-    this.users.login(email, password, (result) => {
-      if(result.error) {
-        return callback(null, false, req.flash('loginMessage', result.data));
-      }
-      else {
-        return callback(null, result.data);
-      }
-    });
+    this.users = new wrapper.Users(apiUrl, options);
   }
 
   get(req, callback) {
     this.users.getUsers(req.user, (users) => {
-      if(users.error) {
-        err = new Error(users.data);
-      }
-      else {
-        users = users.data.map((user) => {
+      if(!users.error) {
+        users.data = users.data.map((user) => {
           user.created = moment(user.created).format(DATE_FORMAT);
           user.modified = moment(user.modified).format(DATE_FORMAT);
           return user;
         });
-        debug(users);
+        debug(users.data);
       }
-      return callback(err, users);
+      return callback(users);
     });
   }
 

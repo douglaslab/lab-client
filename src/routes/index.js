@@ -7,7 +7,6 @@ export default function() {
   var admin = new Admin(global.apiUrl, global.apiOptions);
 
   router.get('/', (req, res) => {
-    console.log(req.flash('loginMessage') );
     res.render('login', { message: req.flash('loginMessage') });
   });
 

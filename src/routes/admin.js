@@ -12,7 +12,7 @@ export default function() {
         res.render('log', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
-          log: result
+          log: result,data
         });
       }
       else {
@@ -27,7 +27,7 @@ export default function() {
         res.render('permissions', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
-          permissions: result
+          permissions: result.data
         });
       }
       else {
@@ -37,14 +37,7 @@ export default function() {
   });
 
   router.post('/permissions', helper.isLoggedIn, helper.isAdmin, (req, res) => {
-    admin.createPermission(req, (result) => {
-      if(!result.error) {
-        res.json(true);
-      }
-      else {
-        helper.handleErrorJSON(res, result.data);
-      }
-    });
+    admin.createPermission(req, (result) => res.json(result));
   });
 
 
