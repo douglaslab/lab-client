@@ -9,8 +9,8 @@ export default class {
   }
 
   get(req, callback) {
-    this.users.getUsers(req.user, (users) => {
-      if(!users.error) {
+    this.users.getUsers(req.user, (err, users) => {
+      if(err) {
         users.data = users.data.map((user) => {
           user.created = moment(user.created).format(DATE_FORMAT);
           user.modified = moment(user.modified).format(DATE_FORMAT);
@@ -18,7 +18,7 @@ export default class {
         });
         debug(users.data);
       }
-      return callback(users);
+      return callback(err, users);
     });
   }
 

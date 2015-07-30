@@ -19,6 +19,7 @@ export default class {
   }
 
   update(req, callback) {
+    //TODO: validate input
     let newItem = req.body;
     debug(newItem);
     if(req.params.replace) {
