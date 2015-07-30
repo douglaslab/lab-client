@@ -7,8 +7,8 @@ export default function(passport) {
   var users = new Users(global.apiUrl, global.apiOptions);
 
   router.get('/', helper.isLoggedIn, helper.isManager, (req, res) => {
-    users.get(req, (error, result) => {
-      if(!error) {
+    users.get(req, (result) => {
+      if(!result.error) {
         res.render('users', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
@@ -16,7 +16,7 @@ export default function(passport) {
         });
       }
       else {
-        helper.handleError(error, req, res);
+        helper.handleError(result.error, req, res);
       }
     });
   });

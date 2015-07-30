@@ -1,17 +1,17 @@
 import wrapper from 'lab-api-wrapper';
+var debug = require('debug')('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var login = function(req, email, password, callback) {
   var users = new wrapper.Users(global.apiUrl, global.apiOptions);
-  console.log('trying to log in user %s', email, global.apiUrl);
+  debug('trying to log in user %s', email);
   users.login(email, password, (result) => {
-    console.log(result);
     if(result.error) {
       console.error('could not log in %s', email);
       return callback(null, false, req.flash('loginMessage', result.data));
     }
     else {
-      console.log('xxx', result);
+      debug('user logged in', result);
       return callback(null, result.data);
     }
   });
