@@ -7,8 +7,8 @@ module.exports = function() {
   var items = new Items(global.apiUrl, global.apiOptions);
 
   router.get('/', helper.isLoggedIn, (req, res) => {
-    items.get(req, (result) => {
-      if(!result.error) {
+    items.get(req, (err, result) => {
+      if(!err && !result.error) {
         res.render('items', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
@@ -22,19 +22,19 @@ module.exports = function() {
   });
 
   router.post('/', helper.isLoggedIn, (req, res) => {
-    items.create(req, (result) => res.json(result));
+    items.create(req, (err, result) => res.json(result));
   });
 
   router.put('/:id', helper.isLoggedIn, (req, res) => {
-    items.update(req, (result) => res.json(result));
+    items.update(req, (err, result) => res.json(result));
   });
 
   router.put('/:id/:replace', helper.isLoggedIn, (req, res) => {
-    items.update(req, (result) => res.json(result));
+    items.update(req, (err, result) => res.json(result));
   });
 
   router.delete('/:id', helper.isLoggedIn, (req, res) => {
-    items.delete(req, (result) => res.json(result));
+    items.delete(req, (err, result) => res.json(result));
   });
 
   return router;

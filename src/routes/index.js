@@ -11,14 +11,8 @@ export default function() {
   });
 
   router.get('/apihealth', (req, res) => {
-    admin.getApiHealth((result) => {
-      res.json({data: {online: result.error ? false : result.data.online}});
-    });
-  });
-
-  router.get('/upload', helper.isLoggedIn, (req, res) => {
-    res.render('upload', {
-      services: []
+    admin.getApiHealth((err, result) => {
+      res.json({data: {online: err || result.error ? false : result.data.online}});
     });
   });
 

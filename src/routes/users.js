@@ -7,8 +7,8 @@ export default function(passport) {
   var users = new Users(global.apiUrl, global.apiOptions);
 
   router.get('/', helper.isLoggedIn, helper.isManager, (req, res) => {
-    users.get(req, (result) => {
-      if(!result.error) {
+    users.get(req, (err, result) => {
+      if(!err && !result.error) {
         res.render('users', {
           username: req.user.name,
           permissionLevel: req.user.permissionLevel,
@@ -16,21 +16,21 @@ export default function(passport) {
         });
       }
       else {
-        helper.handleError(result.error, req, res);
+        helper.handleError(err || result.error, req, res);
       }
     });
   });
 
   router.post('/', helper.isLoggedIn, helper.isManager, (req, res) => {
-    users.create(req, (result) => res.json(result));
+    users.create(req, (err, result) => res.json(result));
   });
 
   router.put('/:email', helper.isLoggedIn, helper.isManager, (req, res) => {
-    users.update(req, (result) => res.json(result));
+    users.update(req, (err, result) => res.json(result));
   });
 
   router.delete('/:email', helper.isLoggedIn, helper.isAdmin, (req, res) => {
-    users.delete(req, (result) => res.json(result));
+    users.delete(req, (err, result) => res.json(result));
   });
 
   router.post('/login', passport.authenticate('local', {
@@ -44,8 +44,8 @@ export default function(passport) {
     res.redirect('/');
   });
 
-  router.get('/settings', helper.isLoggedIn, (req, res) => {
-    res.render('settings', {
+  router.get('/profile', helper.isLoggedIn, (req, res) => {
+    res.render('profile', {
       username: req.user.name,
       email: req.user.email,
       school: req.user.school,
@@ -53,9 +53,9 @@ export default function(passport) {
     });
   });
 
-  router.put('/settings', helper.isLoggedIn, helper.isManager, (req, res) => {
+  router.put('/profile', helper.isLoggedIn, helper.isManager, (req, res) => {
     req.params.email = req.user.email;
-    users.update(req, (result) => res.json(result));
+    users.update(req, (err, result) => res.json(result));
   });
 
   return router;

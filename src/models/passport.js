@@ -5,10 +5,10 @@ var LocalStrategy = require('passport-local').Strategy;
 var login = function(req, email, password, callback) {
   var users = new wrapper.Users(global.apiUrl, global.apiOptions);
   debug('trying to log in user %s', email);
-  users.login(email, password, (result) => {
-    if(result.error) {
+  users.login(email, password, (err, result) => {
+    if(err || result.error) {
       console.error('could not log in %s', email);
-      return callback(null, false, req.flash('loginMessage', result.data));
+      return callback(null, false, req.flash('loginMessage', result.data || err.message));
     }
     else {
       debug('user logged in', result);
