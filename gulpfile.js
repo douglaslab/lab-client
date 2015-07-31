@@ -40,36 +40,36 @@ gulp.task('cleanServer', function() {
 
 gulp.task('bower', function() {
   var dist = getDist(true);
-  var jsFilter = gulpFilter('**/*.js');
-  var cssFilter = gulpFilter('**/*.css');
-  var fontsFilter = gulpFilter(['**/*.woff*', '**/*.eot', '**/*.svg', '**/*.ttf']);
+  var jsFilter = gulpFilter('**/*.js', {restore: true});
+  var cssFilter = gulpFilter('**/*.css', {restore: true});
+  var fontsFilter = gulpFilter(['**/*.woff*', '**/*.eot', '**/*.svg', '**/*.ttf'], {restore: true});
   return gulp.src(bower())
     .pipe(fontsFilter)
     .pipe(gulp.dest(dist.fonts))
-    .pipe(fontsFilter.restore())
+    .pipe(fontsFilter.restore)
     .pipe(jsFilter)
     .pipe(gulp.dest(dist.js))
-    .pipe(jsFilter.restore())
+    .pipe(jsFilter.restore)
     .pipe(cssFilter)
     .pipe(gulp.dest(dist.css));
 });
 
 gulp.task('compileClient', function() {
   var dist = getDist();
-  var jsFilter = gulpFilter('**/*.js');
-  var cssFilter = gulpFilter('**/*.css');
-  var imageFilter = gulpFilter('**/images/*');
+  var jsFilter = gulpFilter('**/*.js', {restore: true});
+  var cssFilter = gulpFilter('**/*.css', {restore: true});
+  var imageFilter = gulpFilter('**/images/*', {restore: true});
 
   gulp.src('client/**')
     .pipe(jsFilter)
     .pipe(babel())
     .pipe(gulpif(!devEnvironment, uglify()))
     .pipe(gulp.dest(dist.dir))
-    .pipe(jsFilter.restore())
+    .pipe(jsFilter.restore)
     .pipe(cssFilter)
     .pipe(minifyCSS())
     .pipe(gulp.dest(dist.dir))
-    .pipe(cssFilter.restore())
+    .pipe(cssFilter.restore)
     .pipe(imageFilter)
     .pipe(gulp.dest(dist.dir));
 });
