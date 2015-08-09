@@ -1,6 +1,5 @@
 import express from 'express';
 import Admin from '../models/admin';
-import helper from '../models/routerHelper';
 
 export default function() {
   var router = express.Router();
