@@ -11,7 +11,7 @@ export default class {
   }
 
   getLog(req, callback) {
-    this.admin.getAuditLog.get(req.user, callback);
+    this.admin.getAuditLog(req.user, callback);
   }
 
   getPermissions(req, callback) {
