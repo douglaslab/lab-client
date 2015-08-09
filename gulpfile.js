@@ -88,7 +88,7 @@ gulp.task('compileServer', function() {
 });
 
 gulp.task('server', ['cleanServer'], function() {
-  return gulp.start([/*'lintServer',*/ 'compileServer']);
+  return gulp.start(['lintServer', 'compileServer']);
 });
 
 gulp.task('client', ['cleanClient'], function() {
