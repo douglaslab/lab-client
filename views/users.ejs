@@ -34,6 +34,7 @@
           <td><%= users[i].permissionLevel %></td>
           <td><%= users[i].created %></td>
           <td><%= users[i].modified %></td>
+          <td><img src="/users/<%= users[i].email %>/photo" title="user's photo" /></td>
           <td>
             <button type="button" class="btn btn-sm btn-default" data-edit="<%= i + 1 %>">
               <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;
