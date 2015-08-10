@@ -48,7 +48,6 @@ export default function(passport) {
     res.render('profile', {
       username: req.user.name,
       email: req.user.email,
-      school: req.user.school,
       permissionLevel: req.user.permissionLevel
     });
   });
@@ -56,6 +55,18 @@ export default function(passport) {
   router.put('/profile', helper.isLoggedIn, helper.isManager, (req, res) => {
     req.params.email = req.user.email;
     users.update(req, (err, result) => res.json(result));
+  });
+
+  router.get('/:email/photo', helper.isLoggedIn, (req, res) => {
+    users.getPhoto(req, (err, photo) => {
+      if(err) {
+        helper.handleError(err, req, res);
+      }
+      else {
+        res.set('Content-type', 'application/octet-stream');
+        res.status(200).send(photo);
+      }
+    });
   });
 
   return router;

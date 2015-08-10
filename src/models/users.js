@@ -39,4 +39,8 @@ export default class {
   delete(req, callback) {
     this.users.deleteUser(req.user, req.params.email, callback);
   }
+
+  getPhoto(req, callback) {
+    this.users.getPhoto(req.user, req.params.email, callback);
+  }
 }
