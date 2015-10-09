@@ -8,6 +8,9 @@ var bower = require('main-bower-files');
 var gulpFilter = require('gulp-filter');
 var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
+var babelify = require('babelify');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
 var minifyCSS = require('gulp-minify-css');
 var clean = require('gulp-rimraf');
 var devEnvironment = (process.env.NODE_ENV || 'development') === 'development';
@@ -54,16 +57,34 @@ gulp.task('bower', function() {
     .pipe(gulp.dest(dist.css));
 });
 
-gulp.task('compileClient', function() {
+// gulp.task('compileClient', function() {
+//   var dist = getDist();
+//   var jsFilter = gulpFilter('**/*.js', {restore: true});
+//   var cssFilter = gulpFilter('**/*.css', {restore: true});
+//   var imageFilter = gulpFilter('**/images/*', {restore: true});
+
+//   gulp.src('client/**')
+//     .pipe(jsFilter)
+//     .pipe(babel())
+//     .pipe(gulpif(!devEnvironment, uglify()))
+//     .pipe(gulp.dest(dist.dir))
+//     .pipe(jsFilter.restore)
+//     .pipe(cssFilter)
+//     .pipe(minifyCSS())
+//     .pipe(gulp.dest(dist.dir))
+//     .pipe(cssFilter.restore)
+//     .pipe(imageFilter)
+//     .pipe(gulp.dest(dist.dir));
+// });
+
+gulp.task('copyAssets', function() {
   var dist = getDist();
-  var jsFilter = gulpFilter('**/*.js', {restore: true});
+  var jsFilter = gulpFilter('vendor/**/*.js', {restore: true});
   var cssFilter = gulpFilter('**/*.css', {restore: true});
-  var imageFilter = gulpFilter('**/images/*', {restore: true});
+  var imageFilter = gulpFilter('**/images/**', {restore: true});
 
   gulp.src('client/**')
     .pipe(jsFilter)
-    .pipe(babel())
-    .pipe(gulpif(!devEnvironment, uglify()))
     .pipe(gulp.dest(dist.dir))
     .pipe(jsFilter.restore)
     .pipe(cssFilter)
@@ -72,6 +93,20 @@ gulp.task('compileClient', function() {
     .pipe(cssFilter.restore)
     .pipe(imageFilter)
     .pipe(gulp.dest(dist.dir));
+});
+
+gulp.task('compileClient', function() {
+  var dist = getDist();
+  var entries = ['index.js', 'items.js', 'permissions.js', 'settings.js', 'users.js'];
+
+  entries.forEach(function(entry) {
+    browserify('client/js/' + entry, { debug: true })
+      .transform(babelify)
+      .bundle()
+      .pipe(source(entry))
+      .on('error', function (err) { console.log('Error : ' + err.message); })
+      .pipe(gulp.dest(dist.js));
+  });
 });
 
 gulp.task('lintServer', function () {
@@ -92,7 +127,7 @@ gulp.task('server', ['cleanServer'], function() {
 });
 
 gulp.task('client', ['cleanClient'], function() {
-  return gulp.start(['compileClient', 'bower']);
+  return gulp.start(['bower', 'compileClient', 'copyAssets']);
 });
 
 gulp.task('default', ['client', 'server']);
