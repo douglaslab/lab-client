@@ -1,4 +1,5 @@
-/* global serverCall, flash */
+import {serverCall, flash} from './global';
+import './events';
 
 $(function() {
   var changes = [];

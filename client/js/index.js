@@ -1,7 +1,5 @@
-import {handleScroll, apiServerStatus} from './global';
+import './events';
 
 $(function() {
-  handleScroll();
-  apiServerStatus();
-  setInterval(apiServerStatus, 30 * 1000);
+  //nothing to do here
 });
