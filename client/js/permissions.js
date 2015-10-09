@@ -1,6 +1,4 @@
-/* eslint-disable no-alert */
 /* global serverCall, flash */
-'use strict';
 
 $(function() {
   var changes = [];

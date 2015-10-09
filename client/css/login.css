@@ -1,40 +1,141 @@
-.form-login {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+.btn {
+  font-weight: 700;
+  height: 36px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none
 }
-.form-login .form-login-heading,
-.form-login .checkbox {
-  margin-bottom: 10px;
+.card-login {
+  background-color: #FFFFFF;
+  margin: 50px auto 25px;
+  max-width: 350px;
 }
-.form-login .checkbox {
-  font-weight: normal;
+.card-login .card-header {
+  background: #000;
+  color: #fff;
+  margin: 0 0 15px;
+  padding: 15px 25px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-size: 13px;
 }
-.form-login .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
+.card-login .card-body {
+  padding: 0 25px 20px;
+}
+.card-login .card-footer {
+  background: #f2fbfd;
+  padding: 15px 25px;
+}
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%
+}
+.profile-name-card {
   font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin: 10px 0 0;
+  min-height: 1em
 }
-.form-login .form-control:focus {
-  z-index: 2;
-}
-.form-login input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-login input[type="password"] {
+.reauth-email {
+  display: block;
+  color: #404040;
+  line-height: 2;
   margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  font-size: 14px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box
+}
+.form-login-heading {
+  margin-bottom: 15px;
+  font: bold 22px/1.3 "adelle";
+}
+.form-signin input {
+  direction: ltr;
+  height: 44px;
+  font-size: 16px
+}
+.form-signin button, .form-signin input[type=email], .form-signin input[type=password], .form-signin input[type=text] {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  z-index: 1;
+  position: relative;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box
+}
+.form-signin .form-control:focus {
+  border-color: #6891a2;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #6891a2;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #6891a2
+}
+.btn.btn-signin {
+  background-color: #00aef0;
+  padding: 0;
+  font-weight: 700;
+  font-size: 14px;
+  height: 50px;
+  border: none;
+  margin-top: 20px;
+  -o-transition: all .218s;
+  -moz-transition: all .218s;
+  -webkit-transition: all .218s;
+  transition: all .218s
+}
+.btn.btn-signin:active, .btn.btn-signin:focus, .btn.btn-signin:hover {
+  background-color: #000
+}
+label>input {
+  display: none
+}
+.loginMethod label {
+  width: 50%;
+  display: block;
+  float: left;
+  margin-bottom: 15px;
+}
+.loginMethod-bg {
+  display: block;
+  padding: 15px 0 15px;
+  border-radius: 5px;
+  -o-transition: all .218s;
+  -moz-transition: all .218s;
+  -webkit-transition: all .218s;
+  transition: all .218s;
+}
+label>input+.loginMethod-bg {
+  cursor: pointer;
+  opacity: 0.3;
+  border: 1px solid transparent;
+}
+label>input:checked+.loginMethod-bg {
+  opacity: 1;
+  border-color: #ededed;
+  background-color: #FFFFFF;
+}
+.name {
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px
 }
 
-#serverStatus {
-  font-size: 20px;
-  font-weight: 400;
+@media only screen and (max-width: 380px) {
+  .card-login .card-footer {
+    font-size: 12px;
+  }
+  .form-login-heading {
+    font-size: 18px;
+  }
 }
-

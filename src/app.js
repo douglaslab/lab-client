@@ -14,7 +14,6 @@ import routes from './routes/index';
 import adminRoutes from './routes/admin';
 import itemRoutes from './routes/items';
 import userRoutes from './routes/users';
-import uploadRoutes from './routes/upload';
 
 var app = express();
 
@@ -55,7 +54,6 @@ app.use(passport.session());
 app.use('/', routes());
 app.use('/admin', adminRoutes());
 app.use('/items', itemRoutes());
-app.use('/upload', uploadRoutes());
 app.use('/users', userRoutes(passport));
 
 
