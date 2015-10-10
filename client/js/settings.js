@@ -5,7 +5,6 @@ var validateForm = function() {
   if($('#settingsForm').parsley().validate()) {
     return {
       name: $('#name').val(),
-      school: $('#school').val(),
       password: $('#password1').val(),
       permissionLevel: $('#permissionLevel').val()
     };
