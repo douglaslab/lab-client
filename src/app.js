@@ -42,7 +42,8 @@ app.use(favicon(path.join(__dirname, '..', 'public', 'images', 'favicon.ico')));
 global.apiUrl = process.env.LAB_API_URL;
 global.apiOptions = {
   version: process.env.LAB_API_VERSION || '1.0.0',
-  userAgent: 'lab-client'
+  userAgent: 'lab-client',
+  returnPromise: true
 };
 
 // Passport configuration
@@ -51,10 +52,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // routes configuration
-app.use('/', routes());
+app.use('/', routes(passport));
 app.use('/admin', adminRoutes());
 app.use('/items', itemRoutes());
-app.use('/users', userRoutes(passport));
+app.use('/users', userRoutes());
 
 
 // catch 404 and forward to error handler

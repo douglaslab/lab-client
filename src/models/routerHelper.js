@@ -21,6 +21,11 @@ var Helper = {
       Helper.handleError(new Error('Permission denied - must be manager'), req, res);
     }
   },
+  copyEmail: function(req, res, next) {
+    //copy admin email from exisiting profile to param for self-update
+    req.params.email = req.user.email;
+    return next();
+  },
   handleError: function(error, req, res) {
     console.error(error);
     res.render('error', {

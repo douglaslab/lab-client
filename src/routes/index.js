@@ -1,19 +1,25 @@
 import express from 'express';
-import Admin from '../models/admin';
+import Controller from '../controllers/admin';
 
-export default function() {
+export default function(passport) {
   var router = express.Router();
-  var admin = new Admin(global.apiUrl, global.apiOptions);
+  var controller = new Controller();
 
   router.get('/', (req, res) => {
     res.render('index', { message: req.flash('loginMessage') });
   });
 
-  router.get('/apihealth', (req, res) => {
-    admin.getApiHealth((err, result) => {
-      res.json({data: {online: err || result.error ? false : result.data.online}});
-    });
+  router.post('/login', passport.authenticate('local', {
+    successRedirect: '/items',
+    failureRedirect: '/',
+    failureFlash: true
+  }));
+
+  router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
   });
 
+  router.get('/apihealth', controller.getApiHealth());
   return router;
-}
+};
