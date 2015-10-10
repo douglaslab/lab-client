@@ -1,0 +1,70 @@
+.inventory-table {
+  font-size: 14px;
+  margin-bottom: 0;
+  width: 100%;
+}
+.inventory-table td, .inventory-table th {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ededed;
+}
+.inventory-table th {
+  color: #000;
+  font-size: 20px;
+  font-family: "adelle", serif;
+  border-top: none !important;
+}
+.inventory-table td strong {
+  color: #B1B1B1
+}
+.inventory-table td .btn {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 599px) {
+  .inventory-table {
+    font-size: 14px;
+  }
+  .inventory-table thead {
+    display: none;
+  }
+  .inventory-table tbody tr {
+    border-top: 1px solid #ededed;
+    position: relative;
+    display: block;
+  }
+  .inventory-table tbody tr:first-child {
+    border: none;
+  }
+  .inventory-table td {
+    display: block;
+    border: none;
+  }
+  .inventory-table .number {
+    font-size: 24px;
+    color: #B1B1B1;
+    padding-top: 20px;
+  }
+  .inventory-table .number:before {
+    content: "#";
+  }
+  .inventory-table .id:before, .inventory-table .properties:before {
+    content: "ID";
+    display: block;
+    font: bold 18px "adelle", serif;
+    margin-bottom: 3px;
+    color: #000;
+  }
+  .inventory-table .properties {
+    padding-bottom: 20px
+  }
+  .inventory-table .properties:before {
+    content: "Properties";
+  }
+  .inventory-table .actions {
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+}

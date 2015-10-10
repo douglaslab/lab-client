@@ -1,52 +1,57 @@
 <html>
   <head>
     <% include partials/head.ejs %>
+    <link rel="stylesheet" type="text/css" href="/css/table.css">
   </head>
   <body>
     <% include partials/navbar.ejs %>
-    <div class="page-header text-center">
-      <h1>Inventory Items</h1>
-    </div>
-
-    <div class="container">
-      <button type="button" class="btn btn-success" id="btnAdd">
-        <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Item
-      </button>
-    </div>
-    <div class="container">
-      <table class="table table-bordered table-striped">
-        <tr>
-          <th>#</th>
-          <th>ID</th>
-          <th>Properties</th>
-          <th></th>
-        </tr>
-        <% for(var i =0; i < items.length; i++) { %>
-        <tr>
-          <td><%= i + 1 %></td>
-          <td><%= items[i].id %></td>
-          <td class="properties">
-            <% for(var prop in items[i].properties) {
-              if(prop !== 'id') { %>
-                <div class="property">
-                  <strong class="name"><%= prop %></strong>:&nbsp;
-                  <span class="value"><%= items[i].properties[prop] %></span>
-                </div>
-            <% }
-            } %>
-          </td>
-          <td>
-            <button type="button" class="btn btn-sm btn-default" data-edit="<%= items[i].id %>">
-              <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
-            </button>
-            <button type="button" class="btn btn-sm btn-danger" data-delete="<%= items[i].id %>">
-              <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
-            </button>
-          </td>
-        </tr>
-        <% } %>
-      </table>
-    </div>
+    <div class="panel-container size-large">
+      <div class="panel">
+        <div class="panel-heading light-bg text-right">
+          <button type="button" class="btn btn-lg btn-simple blue-text" id="btnAdd">
+            <span class="blue-text" title="add item">Add Item <span class="app-icon add"></span></span>
+          </button>
+        </div>
+        <div class="panel-body">
+          <table class="inventory-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Properties</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% for(var i =0; i < items.length; i++) { %>
+              <tr>
+                <td class="number"><%= i + 1 %></td>
+                <td class="id"><%= items[i].id %></td>
+                <td class="properties">
+                  <% for(var prop in items[i].properties) {
+                    if(prop !== 'id') { %>
+                      <div class="property">
+                        <strong class="name"><%= prop %></strong>:&nbsp;
+                        <span class="value"><%= JSON.stringify(items[i].properties[prop], null, 4) %></span>
+                      </div>
+                  <% }
+                  } %>
+                </td>
+                <td class="actions text-right">
+                  <button type="button" class="btn btn-sm btn-simple" title="edit item" data-edit="<%= items[i].id %>">
+                    <span class="app-icon editing"></span>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-simple" title="delete item" data-delete="<%= items[i].id %>">
+                    <span class="app-icon trash"></span>
+                  </button>
+                </td>
+              </tr>
+            <% } %>
+            </tbody>
+          </table>
+        </div><!-- end panel-body -->
+      </div><!-- end panel -->
+    </div><!-- end panel-container -->
 
     <% include partials/flash.ejs %>
     <% include partials/itemModal.ejs %>
