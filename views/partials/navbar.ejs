@@ -1,5 +1,5 @@
     <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top site-header">
       <div class="container-fluid">
         <div class="navbar-header">
           <!-- collapsible menu for mobile -->
@@ -10,8 +10,7 @@
             <span class="icon-bar"></span>
           </button>
           <!-- image and brand -->
-          <a href="/items" class="pull-left"><img style="margin-top: 7px;" src="/images/favicon.ico"></a>
-          <a class="navbar-brand" href="/items">&nbsp;lab-client</a>
+          <a class="navbar-brand pull-left" href="#"><img src="/images/logo-inventory-items.png" width="164" height="23"  alt="User Profile logo"/></a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
@@ -33,9 +32,9 @@
                   <li><a href="/admin/log">Audit Log</a></li>
                   <li><a href="/admin/permissions">Permissions</a></li>
                 <% } %>
-                <li disabled><a href="/settings">Settings</a></li>
+                <li disabled><a href="/users/profile">Profile</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/users/logout">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
               </ul>
             </li>
           </ul>

@@ -1,44 +1,49 @@
 <html>
   <head>
-    <%= include partials/head.ejs %>
+    <% include partials/head.ejs %>
   </head>
   <body>
-    <%= include partials/navbar.ejs %>
+    <% include partials/navbar.ejs %>
     <div class="page-header text-center">
-      <h1>User Settings</h1>
+      <h1>User Profile</h1>
     </div>
     <div class="row">
       <div class="col-lg-offset-3 col-lg-6">
+        <img href="/"
         <form class="form-horizontal" id="settingsForm">
           <div class="form-group">
             <label class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
               <p class="form-control-static" id="email"><%= email %></p>
             </div>
           </div>
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
               <input type="text" class="form-control" id="name" placeholder="Enter name"
                 value="<%= username %>" required minlength="3" maxlength="50">
             </div>
           </div>
           <div class="form-group">
-            <label for="school" class="col-sm-2 control-label">School:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="school" placeholder="Enter school" maxlength="60" value="<%= school %>">
-            </div>
-          </div>
-          <div class="form-group">
             <label for="password1" class="col-sm-2 control-label">Password:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
               <input type="password" class="form-control" id="password1" placeholder="Provide password" minlength="8" required>
             </div>
           </div>
           <div class="form-group">
             <label for="password2" class="col-sm-2 control-label">Verify password:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
               <input type="password" class="form-control" id="password2" minlength="8" maxlength="64" placeholder="Repeat password" required data-parsley-equalto="#password1" data-parsley-equalto-message="The password confirmation should match the password">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <strong>Storage services:</strong>
+            </div>
+            <div class="col-sm-2 text-center">
+              <span style="font-size: 48px">
+                <button type="button" class="glyphicon glyphicon-plus-sign"></button>
+              </span>
             </div>
           </div>
         </form>
@@ -51,8 +56,8 @@
       Your settings have been updated - please relogin. (You'll be automatically logged out in <span id="timer">5</span> seconds)
     </p>
 
-    <%= include partials/flash.ejs %>
-    <%= include partials/scripts.ejs %>
+    <% include partials/flash.ejs %>
+    <% include partials/scripts.ejs %>
     <script src="/vendor/js/parsley.min.js"></script>
     <script src="/js/settings.js"></script>
   </body>

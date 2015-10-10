@@ -1,53 +1,60 @@
 <html>
   <head>
-    <%= include partials/head.ejs %>
+    <% include partials/head.ejs %>
+    <link rel="stylesheet" type="text/css" href="/css/table.css">
   </head>
   <body>
-    <%= include partials/navbar.ejs %>
-    <div class="page-header text-center">
-      <h1>Users</h1>
-    </div>
+    <% include partials/navbar.ejs %>
+    <div class="panel-container size-large">
+      <div class="panel">
+        <div class="panel-heading light-bg text-right">
+          <button type="button" class="btn btn-lg btn-simple blue-text" id="btnAdd">
+            <span class="blue-text" title="add item">Add User <span class="app-icon add"></span></span>
+          </button>
+        </div>
+        <div class="panel-body">
+          <table class="inventory-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Permission Level</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <th>Photo</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% for(var i = 0; i < users.length; i++) { %>
+              <tr>
+                <td><%= i + 1 %></td>
+                <td><%= users[i].name %></td>
+                <td><%= users[i].email %></td>
+                <td><%= users[i].permissionLevel %></td>
+                <td><%= users[i].created %></td>
+                <td><%= users[i].modified %></td>
+                <td><img src="/users/<%= users[i].email %>/photo" title="user's photo" width="128" height="128" /></td>
+                <td class="actions text-right">
+                  <button type="button" class="btn btn-sm btn-simple" title="edit item" data-edit="<%= i+1 %>">
+                    <span class="app-icon editing"></span>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-simple" title="delete item" data-delete="<%= i+1 %>">
+                    <span class="app-icon trash"></span>
+                  </button>
+                </td>
+              </tr>
+            <% } %>
+            </tbody>
+          </table>
+        </div><!-- end panel-body -->
+      </div><!-- end panel -->
+    </div><!-- end panel-container -->
 
-    <div class="container">
-      <button type="button" class="btn btn-success" id="btnAdd">
-        <span class="glyphicon glyphicon-plus"></span> Add User
-      </button>
-    </div>
-    <div class="container">
-      <table class="table table-bordered table-striped">
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>School</th>
-          <th>Permission Level</th>
-          <th>Created</th>
-          <th>Modified</th>
-          <th></th>
-        </tr>
-        <% for(var i = 0; i < users.length; i++) { %>
-        <tr>
-          <td><%= i + 1 %></td>
-          <td><%= users[i].name %></td>
-          <td><%= users[i].email %></td>
-          <td><%= users[i].school %></td>
-          <td><%= users[i].permissionLevel %></td>
-          <td><%= users[i].created %></td>
-          <td><%= users[i].modified %></td>
-          <td>
-            <button type="button" class="btn btn-sm btn-default" data-edit="<%= i + 1 %>">
-              <span class="glyphicon glyphicon-pencil"></span> Edit</button>&nbsp;
-            <button type="button" class="btn btn-sm btn-danger" data-delete="<%= i + 1 %>">
-              <span class="glyphicon glyphicon-trash"></span> Delete</button>
-          </td>
-        </tr>
-        <% } %>
-      </table>
-    </div>
-
-    <%= include partials/flash.ejs %>
-    <%= include partials/userModal.ejs %>
-    <%= include partials/scripts.ejs %>
+    <% include partials/flash.ejs %>
+    <% include partials/userModal.ejs %>
+    <% include partials/scripts.ejs %>
     <script src="/vendor/js/parsley.min.js"></script>
     <script src="/js/users.js"></script>
   </body>

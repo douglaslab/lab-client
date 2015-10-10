@@ -1,11 +1,10 @@
-/* global serverCall, flash */
-'use strict';
+import {serverCall, flash} from './global';
+import './events';
 
 var validateForm = function() {
   if($('#settingsForm').parsley().validate()) {
     return {
       name: $('#name').val(),
-      school: $('#school').val(),
       password: $('#password1').val(),
       permissionLevel: $('#permissionLevel').val()
     };

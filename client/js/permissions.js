@@ -1,6 +1,5 @@
-/* eslint-disable no-alert */
-/* global serverCall, flash */
-'use strict';
+import {serverCall, flash} from './global';
+import './events';
 
 $(function() {
   var changes = [];

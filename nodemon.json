@@ -2,10 +2,11 @@
   "restartable": "rs",
   "ignore": ["tests/*", ".git", "node_modules/**/node_modules"],
   "execMap": {
-    "": "node --harmony"
+    "": "gulp && node"
   },
   "env": {
     "NODE_ENV": "development",
-    "LAB_API_URL": "http://localhost:3000"
+    "LAB_API_URL": "http://localhost:3000",
+    "DROPBOX_API_KEY": "9mi49cptvry4cdg"
   }
 }

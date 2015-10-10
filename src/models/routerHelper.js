@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-'use strict';
-
 var Helper = {
   isLoggedIn: function(req, res, next) {
     if(req.isAuthenticated()) {
@@ -24,27 +21,19 @@ var Helper = {
       Helper.handleError(new Error('Permission denied - must be manager'), req, res);
     }
   },
+  copyEmail: function(req, res, next) {
+    //copy admin email from exisiting profile to param for self-update
+    req.params.email = req.user.email;
+    return next();
+  },
   handleError: function(error, req, res) {
     console.error(error);
     res.render('error', {
-      message: error.message,
       error: error,
       username: req.user.name,
       permissionLevel: req.user.permissionLevel
     });
-  },
-  handleErrorJSON: function(res, err, result) {
-    if(err) {
-      console.error(err);
-      if(err.code && err.code === 'ECONNREFUSED') {
-        result = {error: true, data: 'Cannot connect to API server'};
-      }
-      else {
-        result = {error: true, data: err.message};
-      }
-    }
-    res.json(result);
   }
 };
 
-module.exports = Helper;
+export default Helper;

@@ -1,13 +1,11 @@
-/* eslint-disable no-alert */
-/* global serverCall, flash */
-'use strict';
+import {serverCall, flash} from './global';
+import './events';
 
 var validateForm = function() {
   if($('#userForm').parsley().validate()) {
     return {
       email: $('#email').val(),
       name: $('#name').val(),
-      school: $('#school').val(),
       password: $('#password1').val(),
       permissionLevel: $('#permissionLevel').val()
     };
@@ -87,12 +85,10 @@ $(function() {
     var row = $('table tr:eq(' + $(this).data('edit') + ')');
     var name = $(row).children('td:eq(1)').text();
     var email = $(row).children('td:eq(2)').text();
-    var school = $(row).children('td:eq(3)').text();
-    var permission = $(row).children('td:eq(4)').text();
+    var permission = $(row).children('td:eq(3)').text();
     $('#userModalLabel').text('Edit User ' + email);
     $('#email').remove();
     $('#name').val(name);
-    $('#school').val(school);
     $('#permissionLevel').val(permission);
     $('#btnSave').on('click', () => updateUser(email));
     $('#userModal').modal('show');
