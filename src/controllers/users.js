@@ -37,7 +37,7 @@ export default class {
 
   createUser() {
     return (req, res) => {
-      this.users.createUser(req.user, _validateUser(req.body))
+      this.users.createUser(req.user, this._validateUser(req.body))
         .then(result => res.json(result))
         .catch(err => helper.handleError(err, req, res));
     };
@@ -45,7 +45,7 @@ export default class {
 
   updateUser() {
     return (req, res) => {
-      this.users.updateUser(req.user, req.params.email, _validateUser(req.body))
+      this.users.updateUser(req.user, req.params.email, this._validateUser(req.body))
         .then(result => res.json(result))
         .catch(err => helper.handleError(err, req, res));
     };
