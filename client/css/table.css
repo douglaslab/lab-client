@@ -22,6 +22,11 @@
   margin-left: 10px;
 }
 
+.property {
+  max-width: 400px;
+  word-wrap: break-word;
+}
+
 @media only screen and (max-width: 599px) {
   .inventory-table {
     font-size: 14px;

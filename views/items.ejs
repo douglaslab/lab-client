@@ -29,10 +29,14 @@
                 <td class="id"><%= items[i].id %></td>
                 <td class="properties">
                   <% for(var prop in items[i].properties) {
-                    if(prop !== 'id') { %>
+                    if(prop !== 'id') {
+                      var value = items[i].properties[prop];
+                      if(typeof value === 'object') {
+                        value = '<pre>' + JSON.stringify(value, null, 4) + '</pre>';
+                      } %>
                       <div class="property">
                         <strong class="name"><%= prop %></strong>:&nbsp;
-                        <span class="value"><%= JSON.stringify(items[i].properties[prop], null, 4) %></span>
+                        <span class="value"><%- value %></span>
                       </div>
                   <% }
                   } %>
