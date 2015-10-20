@@ -4,5 +4,3 @@ nodemon.json
 LICENSE.md
 README.md
 .editorconfig
-.eslintrc
-.eslintignore
