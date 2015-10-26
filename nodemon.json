@@ -1,12 +1,11 @@
 {
   "restartable": "rs",
-  "ignore": ["tests/*", ".git", "node_modules/**/node_modules"],
+  "ignore": ["public/**", "lib/**", "tests/**", ".git", "node_modules/**"],
   "execMap": {
     "": "gulp && node"
   },
   "env": {
     "NODE_ENV": "development",
-    "LAB_API_URL": "http://localhost:3000",
-    "DROPBOX_API_KEY": "9mi49cptvry4cdg"
+    "LAB_API_URL": "http://localhost:3000"
   }
 }
