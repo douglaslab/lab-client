@@ -7,6 +7,7 @@ var validateForm = function() {
       email: $('#email').val(),
       name: $('#name').val(),
       password: $('#password1').val(),
+      pin: $('#pin').val(),
       permissionLevel: $('#permissionLevel').val()
     };
   }
