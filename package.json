@@ -53,7 +53,7 @@
     "gulp-mocha": "^2.1.3",
     "gulp-rimraf": "^0.2.0",
     "gulp-uglify": "^1.4.2",
-    "lab-api-wrapper": "^1.0.9",
+    "lab-api-wrapper": "latest",
     "main-bower-files": "^2.9.0",
     "moment": "^2.10.6",
     "morgan": "~1.6.1",
