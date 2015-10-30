@@ -66,7 +66,10 @@ export default class {
           res.set('Content-type', 'application/octet-stream');
           res.status(200).send(photo);
         })
-        .catch(err => helper.handleError(err, req, res));
+        .catch(err => {
+          console.error(err);
+          res.redirect('/images/emptyprofile.png');
+        });
     };
   }
 }
